@@ -6,7 +6,7 @@ import io
 import os
 import re
 from setuptools import setup, find_packages
-
+from cx_Freeze import setup, Executable
 
 def open_relative(*path):
     """
@@ -72,6 +72,28 @@ for package in packages:
             package_path = os.path.join(package_path, pkg)
 all_packages.extend(service_packages)
 
+
+bdist_msi_options = {
+    "add_to_path": True,
+    'initial_target_dir': r'[ProgramFilesFolder]\%s\%s' % ("Oracle", "oci-cli"),
+    "upgrade_code": "{C56A4180-65AA-42EC-A945-5FD21DEC0538}",
+
+}
+
+build_exe_options = {
+    "packages":all_packages,
+    "includes":['oci._vendor.idna.idnadata'],
+    "optimize": 1,
+    "include_msvcr": True}
+
+executables = [
+    Executable(
+        script= os.path.join("src", "oci_cli","cli.py"),
+        copyright="Copyright (C) 2022 Oracle",
+        base=None,
+        target_name="oci.exe"
+    ),
+]
 setup(
     name='oci-cli',
     url='https://docs.cloud.oracle.com/iaas/Content/API/Concepts/cliconcepts.htm',
@@ -90,6 +112,11 @@ setup(
     package_dir=package_dirs,
     include_package_data=True,
     python_requires='>=3.6',
+    executables=executables,
+    options={
+        "build_exe": build_exe_options,
+        "bdist_msi": bdist_msi_options,
+    },
     license="Universal Permissive License 1.0 or Apache License 2.0",
     classifiers=[
         "Development Status :: 5 - Production/Stable",

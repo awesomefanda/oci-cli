@@ -18,7 +18,7 @@ if "site-packages" in this_file_path or "dist-packages" in this_file_path:
     # last occurrence of oci_cli in the path.
     python_cli_root_dir = this_file_path[0:this_file_path.rindex("oci_cli")]
 else:
-    python_cli_root_dir = this_file_path[0:this_file_path.index("/src/oci_cli")]
+    python_cli_root_dir = this_file_path[0:this_file_path.index(path.join('src', 'oci_cli'))]
 sys.path.append(python_cli_root_dir + 'src')
 sys.path.append(python_cli_root_dir)
 services_dir = path.join(python_cli_root_dir, ALL_SERVICES_DIR)
