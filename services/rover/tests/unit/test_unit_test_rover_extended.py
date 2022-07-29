@@ -20,6 +20,7 @@ import json
 import click
 import pytest
 import unittest
+import random
 
 from tests import test_config_container
 from tests import util
@@ -48,6 +49,18 @@ def get_mock_context():
                          obj=context_obj)
 
 
+class mock_compute_img_obj():
+    class data:
+        display_name = 'name1'
+        size_in_mbs = 123
+        compartment_id = 'compartment1'
+
+
+class mock_object_storage_obj():
+    class data:
+        compartment_id = 'compartment1'
+
+
 class UnitTestRover(unittest.TestCase):
     class TestResult(enum.Enum):
         Success = 1
@@ -65,11 +78,11 @@ class UnitTestRover(unittest.TestCase):
     def setUp(self):
         self.test_specific_set = {}  # When empty, all tests are run.
 
-        self.specific_arg_values = {"profile": "DEFAULT", "if-match": "True", "all": None, 'cluster-workloads': None,
-                                    'cluster-size': '5', 'node-workloads': None, "wait": None, "lifecycle-state": "CREATING",
+        self.specific_arg_values = {"profile": "DEFAULT", "if-match": "True", "all": None, 'cluster-workloads': None, 'cluster-type': ["STANDALONE", "STATION"],
+                                    'cluster-size': str(random.randint(5, 30)), 'node-workloads': None, "wait": None, "lifecycle-state": "CREATING",
                                     'shipping-preference': 'ORACLE_SHIPPED', 'type': ["BUCKET", "IMAGE"],
                                     "test_defined_tag": '{"string1": "string", "string2": "string"}', "force": None,
-                                    "debug": None, "super-user-password": None, "unlock-passphrase": None}
+                                    "debug": None, "super-user-password": None, "unlock-passphrase": None, "subscription-id": "test subscription-id"}
         self.complex_data_defs = {
             "customer-shipping-address": {
                 "required_params": ["addressee", "care-of", "address1", "city-or-locality", "state-or-region",
@@ -88,10 +101,12 @@ class UnitTestRover(unittest.TestCase):
 
         self.cluster_subcommands = [
             {"sub_command": "create",
-             "required_params": ["compartment-id", "display-name", "cluster-size"],
-             "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact", "addressee", "care-of", "address1",
+             "required_params": ["compartment-id", "display-name", "cluster-size", "cluster-type"],
+             "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact",
+                                 "addressee", "care-of", "address1",
                                  "city-or-locality", "state-province-region", "country", "zip-postal-code",
-                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3", "address4"],
+                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3",
+                                 "address4", "master-key-id", "policy-name", "policy-compartment-id"],
              },
             {"sub_command": "change-compartment",
              "required_params": ["compartment-id", "cluster-id"],
@@ -105,17 +120,17 @@ class UnitTestRover(unittest.TestCase):
             {"sub_command": "update",
              "required_params": ["cluster-id"],
              "optional_params": ["addressee", "care-of", "address1",
-                                 "city-or-locality", "state-province-region", "country", "zip-postal-code",
-                                 "phone-number", "email"]},
+                                 "city-or-locality", "lifecycle-state-details", "state-province-region",
+                                 "country", "zip-postal-code", "phone-number", "email"]},
             {"sub_command": "request-approval",
              "required_params": ["cluster-id"],
              "optional_params": []},
             {"sub_command": "add-workload",
-             "required_params": ["cluster-id", "compartment-id", "type"],
-             "test_necessary_params": ["bucket-id", "bucket-name", "force"],
+             "required_params": ["cluster-id", "type"],
+             "test_necessary_params": ["bucket-name", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             {"sub_command": "add-workload",
-             "required_params": ["cluster-id", "compartment-id", "type"],
+             "required_params": ["cluster-id", "type"],
              "test_necessary_params": ["image-id", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             {"sub_command": "delete-workload",
@@ -132,10 +147,12 @@ class UnitTestRover(unittest.TestCase):
 
         self.node_subcommands = [
             {"sub_command": "create",
-             "required_params": ["compartment-id", "display-name"],
+             "required_params": ["compartment-id", "display-name", "shape"],
              "optional_params": ["shipping-preference", "point-of-contact-phone-number", "point-of-contact", "addressee", "care-of", "address1",
                                  "city-or-locality", "state-province-region", "country", "zip-postal-code",
-                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3", "address4"]},
+                                 "phone-number", "email", "freeform-tags", "defined-tags", "address2", "address3",
+                                 "address4", "master-key-id", "policy-name",
+                                 "policy-compartment-id"]},
             {"sub_command": "change-compartment",
              "required_params": ["compartment-id", "node-id"],
              "optional_params": ["if-match"]},
@@ -148,17 +165,17 @@ class UnitTestRover(unittest.TestCase):
             {"sub_command": "update",
              "required_params": ["node-id"],
              "optional_params": ["addressee", "care-of", "address1",
-                                 "city-or-locality", "state-province-region", "country", "zip-postal-code",
+                                 "city-or-locality", "lifecycle-state-details", "state-province-region", "country", "zip-postal-code",
                                  "phone-number", "email"]},
             {"sub_command": "request-approval",
              "required_params": ["node-id"],
              "optional_params": []},
             {"sub_command": "add-workload",
-             "required_params": ["node-id", "compartment-id", "type"],
-             "test_necessary_params": ["bucket-id", "bucket-name", "force"],
+             "required_params": ["node-id", "type"],
+             "test_necessary_params": ["bucket-name", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             {"sub_command": "add-workload",
-             "required_params": ["node-id", "compartment-id", "type"],
+             "required_params": ["node-id", "type"],
              "test_necessary_params": ["image-id", "force"],
              "optional_params": ["prefix", "range-start", "range-end"]},
             # {"sub_command": "delete-workload",
@@ -173,9 +190,24 @@ class UnitTestRover(unittest.TestCase):
                  "mock_prompt_for_secrets": "'rover123'"}},
         ]
 
+        self.shape_subcommands = [
+            {"sub_command": "list",
+             "required_params": ["compartment-id"],
+             "optional_params": []},
+        ]
+
+        self.policy_subcommands = [
+            {"sub_command": "create-master-key-policy",
+             "required_params": ["master-key-id"],
+             "optional_params": ["policy-name", "policy-compartment-id"]},
+        ]
+
         self.command_defs = [
-            {"command": "cluster", "sub_commands": self.cluster_subcommands},
+            {"command": "standalone-cluster", "sub_commands": self.cluster_subcommands},
+            {"command": "station-cluster", "sub_commands": self.cluster_subcommands},
             {"command": "node", "sub_commands": self.node_subcommands},
+            {"command": "shape", "sub_commands": self.shape_subcommands},
+            {"command": "rover", "sub_commands": self.policy_subcommands}
         ]
         self.success_count = 0
         self.failed_count = 0
@@ -186,11 +218,19 @@ class UnitTestRover(unittest.TestCase):
     #       - CLI errors when any of the Required params is not supplied.
     #       - CLI accepts all Required params
     #       - CLI accepts all Optional params
-
+    @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.validate_bucket', return_value=mock_object_storage_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.validate_bucket', return_value=mock_object_storage_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.validate_get_image', return_value=mock_compute_img_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.validate_get_image', return_value=mock_compute_img_obj)
+    @mock.patch('services.rover.src.oci_cli_rover_cluster.rovercluster_utils.export_compute_image_helper')
+    @mock.patch('services.rover.src.oci_cli_rover_node.rovernode_cli_extended.export_compute_image_helper')
     @mock.patch('services.rover.src.oci_cli_rover.rover_utils.prompt_for_secrets')
     @mock.patch('click.prompt', return_value=True)
     @mock.patch('oci_cli.cli_util.build_client')
-    def test_rover(self, mock_client, mock_prompt, mock_prompt_for_secrets):
+    @mock.patch('oci_cli.cli_util.render_response')
+    def test_rover(self, mock_client_render_response, mock_client, mock_prompt, mock_prompt_for_secrets, mock_node_export_compute_image,
+                   mock_cluster_export_compute_image, mock_node_validate_image, mock_cluster_validate_image, mock_node_validate_bucket,
+                   mock_cluster_validate_bucket):
         for command_def in self.command_defs:
             command = command_def["command"]
             specific_sub_command_set = self._sub_command_list_in_specific_test_set(command)
@@ -261,7 +301,10 @@ class UnitTestRover(unittest.TestCase):
 
     def _generate_command_list(self, command, sub_command_def, test_type):
         # click.echo("command=%s,sub_command=%s::::%s" % (command, sub_command_def["sub_command"], test_type))
-        c_list = ["rover", command, sub_command_def["sub_command"]]
+        if command == 'rover':
+            c_list = [command, sub_command_def["sub_command"]]
+        else:
+            c_list = ["rover", command, sub_command_def["sub_command"]]
         # if (test_type == self.TestType.NoArgs):
         #     return c_list
         if 'update' in sub_command_def["sub_command"] or 'delete' in sub_command_def["sub_command"]:
@@ -284,13 +327,17 @@ class UnitTestRover(unittest.TestCase):
         return c_list
 
     def _add_args(self, arg_list, test_type):
-
         new_arg_list = []
         for item in arg_list:
             s = ""
             new_arg_list.append("--" + item)
             if item in self.specific_arg_values:
-                if item == "type":
+                if item == "cluster-type":
+                    if int(self.specific_arg_values['cluster-size']) >= 15:
+                        s = "STATION"
+                    else:
+                        s = "STANDALONE"
+                elif item == "type":
                     if "image-id" in arg_list:
                         s = "IMAGE"
                     else:

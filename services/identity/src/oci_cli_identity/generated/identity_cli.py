@@ -15,7 +15,7 @@ from oci_cli import custom_types  # noqa: F401
 from oci_cli.aliasing import CommandGroupWithAlias
 
 
-@cli.command(cli_util.override('iam.iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam.iam_root_group.help', """APIs for managing users, groups, compartments, and policies."""), short_help=cli_util.override('iam.iam_root_group.short_help', """Identity and Access Management Service API"""))
+@cli.command(cli_util.override('iam.iam_root_group.command_name', 'iam'), cls=CommandGroupWithAlias, help=cli_util.override('iam.iam_root_group.help', """APIs for managing users, groups, compartments, policies, and identity domains."""), short_help=cli_util.override('iam.iam_root_group.short_help', """Identity and Access Management Service API"""))
 @cli_util.help_option_group
 def iam_root_group():
     pass
@@ -39,11 +39,11 @@ def tagging_work_request_log_group():
     pass
 
 
-@click.command(cli_util.override('iam.compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the resources for one project or business unit from another). A common approach is to create a compartment for each major part of your organization. For more information, see [Overview of the IAM Service] and also [Setting Up Your Tenancy].
+@click.command(cli_util.override('iam.compartment_group.command_name', 'compartment'), cls=CommandGroupWithAlias, help="""A collection of related resources. Compartments are a fundamental component of Oracle Cloud Infrastructure for organizing and isolating your cloud resources. You use them to clearly separate resources for the purposes of measuring usage and billing, access (through the use of IAM Service policies), and isolation (separating the resources for one project or business unit from another). A common approach is to create a compartment for each major part of your organization. For more information, see [Overview of IAM] and also [Setting Up Your Tenancy].
 
 To place a resource in a compartment, simply specify the compartment ID in the \"Create\" request object when initially creating the resource. For example, to launch an instance into a particular compartment, specify that compartment's OCID in the `LaunchInstance` request. You can't move an existing resource from one compartment to another.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Get Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -57,7 +57,7 @@ def network_sources_group():
     pass
 
 
-@click.command(cli_util.override('iam.authentication_policy_group.command_name', 'authentication-policy'), cls=CommandGroupWithAlias, help="""Authentication policy, currently set for the given compartment""")
+@click.command(cli_util.override('iam.authentication_policy_group.command_name', 'authentication-policy'), cls=CommandGroupWithAlias, help="""Authentication policy, currently set for the given compartment.""")
 @cli_util.help_option_group
 def authentication_policy_group():
     pass
@@ -87,7 +87,7 @@ def tag_group():
     pass
 
 
-@click.command(cli_util.override('iam.iam_work_request_log_group.command_name', 'iam-work-request-log'), cls=CommandGroupWithAlias, help="""The log entity for a IAM work request.""")
+@click.command(cli_util.override('iam.iam_work_request_log_group.command_name', 'iam-work-request-log'), cls=CommandGroupWithAlias, help="""(For tenancies that support identity domains) The log entity for a IAM work request.""")
 @cli_util.help_option_group
 def iam_work_request_log_group():
     pass
@@ -99,11 +99,11 @@ def bulk_edit_tags_resource_type_collection_group():
     pass
 
 
-@click.command(cli_util.override('iam.group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment. For conceptual information about groups and other IAM Service components, see [Overview of the IAM Service].
+@click.command(cli_util.override('iam.group_group.command_name', 'group'), cls=CommandGroupWithAlias, help="""A collection of users who all need the same type of access to a particular set of resources or compartment. For conceptual information about groups and other IAM Service components, see [Overview of IAM].
 
 If you're federating with an identity provider (IdP), you need to create mappings between the groups defined in the IdP and groups you define in the IAM service. For more information, see [Identity Providers and Federation]. Also see [IdentityProvider] and [IdpGroupMapping].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Get Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -111,7 +111,7 @@ def group_group():
     pass
 
 
-@click.command(cli_util.override('iam.policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about policies and other IAM Service components, see [Overview of the IAM Service]. If you're new to policies, see [Getting Started with Policies].
+@click.command(cli_util.override('iam.policy_group.command_name', 'policy'), cls=CommandGroupWithAlias, help="""A document that specifies the type of access a group has to the resources in a compartment. For information about policies and other IAM Service components, see [Overview of IAM]. If you're new to policies, see [Get Started with Policies].
 
 The word \"policy\" is used by people in different ways:
 
@@ -167,7 +167,7 @@ def idp_group_mapping_group():
 
 @click.command(cli_util.override('iam.tenancy_group.command_name', 'tenancy'), cls=CommandGroupWithAlias, help="""The root compartment that contains all of your organization's compartments and other Oracle Cloud Infrastructure cloud resources. When you sign up for Oracle Cloud Infrastructure, Oracle creates a tenancy for your company, which is a secure and isolated partition where you can create, organize, and administer your cloud resources.
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Get Started with Policies].""")
 @cli_util.help_option_group
 def tenancy_group():
     pass
@@ -195,7 +195,7 @@ def ui_password_information_group():
 
 @click.command(cli_util.override('iam.identity_provider_group.command_name', 'identity-provider'), cls=CommandGroupWithAlias, help="""The resulting base object when you add an identity provider to your tenancy. A [Saml2IdentityProvider] is a specific type of `IdentityProvider` that supports the SAML 2.0 protocol. Each `IdentityProvider` object has its own OCID. For more information, see [Identity Providers and Federation].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Get Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -229,7 +229,7 @@ def api_key_group():
     pass
 
 
-@click.command(cli_util.override('iam.domain_group.command_name', 'domain'), cls=CommandGroupWithAlias, help="""Properties for a Domain""")
+@click.command(cli_util.override('iam.domain_group.command_name', 'domain'), cls=CommandGroupWithAlias, help="""(For tenancies that support identity domains) Properties for an identity domain. An identity domain is used to manage users and groups, integration standards, external identities, and secure application integration through Oracle Single Sign-on (SSO) configuration.""")
 @cli_util.help_option_group
 def domain_group():
     pass
@@ -243,7 +243,7 @@ def tagging_work_request_error_group():
 
 @click.command(cli_util.override('iam.region_subscription_group.command_name', 'region-subscription'), cls=CommandGroupWithAlias, help="""An object that represents your tenancy's access to a particular region (i.e., a subscription), the status of that access, and whether that region is the home region. For more information, see [Managing Regions].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Get Started with Policies].""")
 @cli_util.help_option_group
 def region_subscription_group():
     pass
@@ -255,7 +255,7 @@ def standard_tag_namespace_template_group():
     pass
 
 
-@click.command(cli_util.override('iam.iam_work_request_group.command_name', 'iam-work-request'), cls=CommandGroupWithAlias, help="""A IAM work request object that allows users to track Asynchronous API status.""")
+@click.command(cli_util.override('iam.iam_work_request_group.command_name', 'iam-work-request'), cls=CommandGroupWithAlias, help="""(For tenancies that support identity domains) An IAM work request object that allows users to track the status of asynchronous API requests.""")
 @cli_util.help_option_group
 def iam_work_request_group():
     pass
@@ -279,7 +279,7 @@ def dynamic_group_group():
 
 @click.command(cli_util.override('iam.region_group.command_name', 'region'), cls=CommandGroupWithAlias, help="""A localized geographic area, such as Phoenix, AZ. Oracle Cloud Infrastructure is hosted in regions and Availability Domains. A region is composed of several Availability Domains. An Availability Domain is one or more data centers located within a region. For more information, see [Regions and Availability Domains].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].""")
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Get Started with Policies].""")
 @cli_util.help_option_group
 def region_group():
     pass
@@ -319,11 +319,11 @@ def tag_default_group():
     pass
 
 
-@click.command(cli_util.override('iam.user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], [SwiftPassword] and [AuthToken]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users. For conceptual information about users and other IAM Service components, see [Overview of the IAM Service].
+@click.command(cli_util.override('iam.user_group.command_name', 'user'), cls=CommandGroupWithAlias, help="""An individual employee or system that needs to manage or use your company's Oracle Cloud Infrastructure resources. Users might need to launch instances, manage remote disks, work with your cloud network, etc. Users have one or more IAM Service credentials ([ApiKey], [UIPassword], [SwiftPassword] and [AuthToken]). For more information, see [User Credentials]). End users of your application are not typically IAM Service users, but for tenancies that have identity domains, they might be. For conceptual information about users and other IAM Service components, see [Overview of IAM].
 
 These users are created directly within the Oracle Cloud Infrastructure system, via the IAM service. They are different from *federated users*, who authenticate themselves to the Oracle Cloud Infrastructure Console via an identity provider. For more information, see [Identity Providers and Federation].
 
-To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Getting Started with Policies].
+To use any of the API operations, you must be authorized in an IAM policy. If you're not authorized, talk to an administrator. If you're an administrator who needs to write policies to give users access, see [Get Started with Policies].
 
 **Warning:** Oracle recommends that you avoid using any confidential information when you supply string values using the API.""")
 @cli_util.help_option_group
@@ -371,12 +371,12 @@ iam_root_group.add_command(tag_default_group)
 iam_root_group.add_command(user_group)
 
 
-@domain_group.command(name=cli_util.override('iam.activate_domain.command_name', 'activate'), help=u"""If the domain's {@code lifecycleState} is INACTIVE, 1. Set the {@code lifecycleDetails} to ACTIVATING and asynchronously starts enabling    the domain and return 202 ACCEPTED.     1.1 Sets the domain status to ENABLED and set specified domain's         {@code lifecycleState} to ACTIVE and set the {@code lifecycleDetails} to null.
+@domain_group.command(name=cli_util.override('iam.activate_domain.command_name', 'activate'), help=u"""(For tenancies that support identity domains) Activates a deactivated identity domain. You can only activate identity domains that your user account is not a part of.
 
-To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status. Deactivate a domain can be done using HTTP POST /domains/{domainId}/actions/deactivate.
+After you send the request, the `lifecycleDetails` of the identity domain is set to ACTIVATING. When the operation completes, the `lifecycleDetails` is set to null and the `lifecycleState` of the identity domain is set to ACTIVE.
 
-- If the domain's {@code lifecycleState} is ACTIVE, returns 202 ACCEPTED with no action   taken on service side. - If domain is of {@code type} DEFAULT or DEFAULT_LIGHTWEIGHT or domain's {@code lifecycleState} is not INACTIVE,   returns 400 BAD REQUEST. - If the domain doesn't exists, returns 404 NOT FOUND. - If the authenticated user is part of the domain to be activated, returns 400 BAD REQUEST - If error occurs while activating domain, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](activateDomain)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status. \n[Command Reference](activateDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -460,6 +460,136 @@ def activate_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, totp_t
         mfa_totp_token=_details,
         **kwargs
     )
+    cli_util.render_response(result, ctx)
+
+
+@tag_default_group.command(name=cli_util.override('iam.add_tag_default_lock.command_name', 'add'), help=u"""Add a resource lock to a tag default. \n[Command Reference](addTagDefaultLock)""")
+@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@cli_util.wrap_exceptions
+def add_tag_default_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, type, related_resource_id, message, if_match):
+
+    if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.add_tag_default_lock(
+        tag_default_id=tag_default_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_default(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tag_namespace_group.command(name=cli_util.override('iam.add_tag_namespace_lock.command_name', 'add'), help=u"""Add a resource lock to a tag namespace. \n[Command Reference](addTagNamespaceLock)""")
+@cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--related-resource-id', help=u"""The ID of the resource that is locking this resource. Indicates that deleting this resource will remove the lock.""")
+@cli_util.option('--message', help=u"""A message added by the creator of the lock. This is typically used to give an indication of why the resource is locked.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagNamespace'})
+@cli_util.wrap_exceptions
+def add_tag_namespace_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, type, related_resource_id, message, if_match):
+
+    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    if related_resource_id is not None:
+        _details['relatedResourceId'] = related_resource_id
+
+    if message is not None:
+        _details['message'] = message
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.add_tag_namespace_lock(
+        tag_namespace_id=tag_namespace_id,
+        add_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_namespace') and callable(getattr(client, 'get_tag_namespace')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_namespace(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
     cli_util.render_response(result, ctx)
 
 
@@ -602,6 +732,7 @@ After you start this operation, you cannot start either the [DeleteTag] or the [
 
 In order to delete tags, you must first retire the tags. Use [UpdateTag] to retire a tag. \n[Command Reference](bulkDeleteTags)""")
 @cli_util.option('--tag-definition-ids', required=True, type=custom_types.CLI_COMPLEX_TYPE, help=u"""The OCIDs of the tag definitions to delete""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -610,9 +741,11 @@ In order to delete tags, you must first retire the tags. Use [UpdateTag] to reti
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'tag-definition-ids': {'module': 'identity', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
-def bulk_delete_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_definition_ids):
+def bulk_delete_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_definition_ids, is_lock_override):
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
 
     _details = {}
@@ -779,6 +912,7 @@ After you start this operation, you cannot start either the [DeleteTag] or the [
 To delete a tag namespace, you must first retire it. Use [UpdateTagNamespace] to retire a tag namespace. \n[Command Reference](cascadeDeleteTagNamespace)""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the work request to see if it has reached the state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -787,7 +921,7 @@ To delete a tag namespace, you must first retire it. Use [UpdateTagNamespace] to
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match):
+def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -795,6 +929,8 @@ def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_second
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.cascade_delete_tag_namespace(
@@ -827,13 +963,11 @@ def cascade_delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_second
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.change_domain_compartment.command_name', 'change-compartment'), help=u"""Change the containing compartment for a domain.
+@domain_group.command(name=cli_util.override('iam.change_domain_compartment.command_name', 'change-compartment'), help=u"""(For tenancies that support identity domains) Moves the identity domain to a different compartment in the tenancy.
 
-This is an asynchronous call where the Domain's compartment is changed and is updated with the new compartment information. To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
-
-The compartment change is complete when accessed via domain URL and also returns new compartment OCID. - If the domain doesn't exists, returns 404 NOT FOUND. - If Domain {@code type} is DEFAULT or DEFAULT_LIGHTWEIGHT, return 400 BAD Request - If Domain is not active or being updated, returns 400 BAD REQUEST. - If error occurs while changing compartment for domain, return 500 INTERNAL SERVER ERROR. \n[Command Reference](changeDomainCompartment)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
-@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the destination compartment into which to move the domain.""")
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status. \n[Command Reference](changeDomainCompartment)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
+@cli_util.option('--compartment-id', required=True, help=u"""The [OCID] of the destination compartment into which to move the identity domain.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -888,11 +1022,13 @@ def change_domain_compartment(ctx, from_json, wait_for_state, max_wait_seconds, 
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.change_domain_license_type.command_name', 'change-domain-license-type'), help=u"""If the domain's {@code lifecycleState} is ACTIVE, validates the requested {@code licenseType} update is allowed and 1. Set the {@code lifecycleDetails} to UPDATING 2. Asynchronously starts updating the domain and return 202 ACCEPTED.     2.1 Successfully updates specified domain's {@code licenseType}. 3. On completion set the {@code lifecycleDetails} to null. To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+@domain_group.command(name=cli_util.override('iam.change_domain_license_type.command_name', 'change-domain-license-type'), help=u"""(For tenancies that support identity domains) Changes the license type of the given identity domain. The identity domain's `lifecycleState` must be set to ACTIVE and the requested `licenseType` must be allowed. To retrieve the allowed `licenseType` for the identity domain, use [ListAllowedDomainLicenseTypes].
 
-- If license type update is successful, return 202 ACCEPTED - If requested {@code licenseType} validation fails, returns 400 Bad request. - If Domain is not active or being updated, returns 400 BAD REQUEST. - If Domain {@code type} is DEFAULT or DEFAULT_LIGHTWEIGHT, return 400 BAD Request - If the domain doesn't exists, returns 404 NOT FOUND - If any internal error occurs, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](changeDomainLicenseType)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
-@cli_util.option('--license-type', help=u"""The License type of Domain""")
+After you send your request, the `lifecycleDetails` of this identity domain is set to UPDATING. When the update of the identity domain completes, then the `lifecycleDetails` is set to null.
+
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status. \n[Command Reference](changeDomainLicenseType)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
+@cli_util.option('--license-type', help=u"""The license type of the identity domain.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -956,17 +1092,20 @@ To move the tag namespace, you must have the manage tag-namespaces permission on
 Moving a tag namespace moves all the tag key definitions contained in the tag namespace. \n[Command Reference](changeTagNamespaceCompartment)""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--compartment-id', required=True, help=u"""The Oracle Cloud ID (OCID) of the destination compartment.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartment_id):
+def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartment_id, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['compartmentId'] = compartment_id
@@ -985,7 +1124,9 @@ def change_tag_namespace_compartment(ctx, from_json, tag_namespace_id, compartme
 You must specify a *description* for the auth token (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateAuthToken].
 
 Every user has permission to create an auth token for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to create an auth token for any user, including themselves. \n[Command Reference](createAuthToken)""")
-@cli_util.option('--description', required=True, help=u"""The description you assign to the auth token during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the auth token during creation. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1012,8 +1153,6 @@ def create_auth_token(ctx, from_json, description, user_id):
 
 
 @compartment_group.command(name=cli_util.override('iam.create_compartment.command_name', 'create'), help=u"""Creates a new compartment in the specified compartment.
-
-**Important:** Compartments cannot be deleted.
 
 Specify the parent compartment's OCID as the compartment ID in the request object. Remember that the tenancy is simply the root compartment. For information about OCIDs, see [Resource Identifiers].
 
@@ -1114,7 +1253,9 @@ def create_customer_secret_key(ctx, from_json, display_name, user_id):
 
 @user_group.command(name=cli_util.override('iam.create_db_credential.command_name', 'create-db-credential'), help=u"""Creates a new DB credential for the specified user. \n[Command Reference](createDbCredential)""")
 @cli_util.option('--password', required=True, help=u"""The password for the DB credentials during creation.""")
-@cli_util.option('--description', required=True, help=u"""The description you assign to the DB credentials during creation.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the DB credentials during creation.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1142,25 +1283,25 @@ def create_db_credential(ctx, from_json, password, description, user_id):
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.create_domain.command_name', 'create'), help=u"""Creates a new domain in the tenancy with domain home in {@code homeRegion}. This is an asynchronous call - where, at start, {@code lifecycleState} of this domain is set to CREATING and {@code lifecycleDetails} to UPDATING. On domain creation completion this Domain's {@code lifecycleState} will be set to ACTIVE and {@code lifecycleDetails} to null.
+@domain_group.command(name=cli_util.override('iam.create_domain.command_name', 'create'), help=u"""(For tenancies that support identity domains) Creates a new identity domain in the tenancy with the identity domain home in `homeRegion`. After you send your request, the temporary `lifecycleState` of this identity domain is set to CREATING and `lifecycleDetails` to UPDATING. When creation of the identity domain completes, this identity domain's `lifecycleState` is set to ACTIVE and `lifecycleDetails` to null.
 
-To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status.
 
-After creating a `Domain`, make sure its `lifecycleState` changes from CREATING to ACTIVE before using it. If the domain's {@code displayName} already exists, returns 400 BAD REQUEST. If any one of admin related fields are provided and one of the following 3 fields - {@code adminEmail}, {@code adminLastName} and {@code adminUserName} - is not provided, returns 400 BAD REQUEST. - If {@code isNotificationBypassed} is NOT provided when admin information is provided, returns 400 BAD REQUEST. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](createDomain)""")
-@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the Compartment where domain is created""")
-@cli_util.option('--display-name', required=True, help=u"""The mutable display name of the domain.""")
-@cli_util.option('--description', required=True, help=u"""Domain entity description""")
+After creating an `identity domain`, first make sure its `lifecycleState` changes from CREATING to ACTIVE before you use it. \n[Command Reference](createDomain)""")
+@cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment where the identity domain is created.""")
+@cli_util.option('--display-name', required=True, help=u"""The mutable display name of the identity domain.""")
+@cli_util.option('--description', required=True, help=u"""The identity domain description. You can have an empty description.""")
 @cli_util.option('--home-region', required=True, help=u"""The region's name identifier. See [Regions and Availability Domains] for the full list of supported region names.
 
 Example: `us-phoenix-1`""")
-@cli_util.option('--license-type', required=True, help=u"""The License type of Domain""")
-@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicates whether domain is hidden on login screen or not.""")
-@cli_util.option('--admin-first-name', help=u"""The admin first name""")
-@cli_util.option('--admin-last-name', help=u"""The admin last name""")
-@cli_util.option('--admin-user-name', help=u"""The admin user name""")
-@cli_util.option('--admin-email', help=u"""The admin email address""")
-@cli_util.option('--is-notification-bypassed', type=click.BOOL, help=u"""Indicates if admin user created in IDCS stripe would like to receive notification like welcome email or not. Required field only if admin information is provided, otherwise optional.""")
-@cli_util.option('--is-primary-email-required', type=click.BOOL, help=u"""Optional field to indicate whether users in the domain are required to have a primary email address or not Defaults to true""")
+@cli_util.option('--license-type', required=True, help=u"""The license type of the identity domain.""")
+@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicates whether the identity domain is hidden on the sign-in screen or not.""")
+@cli_util.option('--admin-first-name', help=u"""The administrator's first name.""")
+@cli_util.option('--admin-last-name', help=u"""The administrator's last name.""")
+@cli_util.option('--admin-user-name', help=u"""The administrator's user name.""")
+@cli_util.option('--admin-email', help=u"""The administrator's email address.""")
+@cli_util.option('--is-notification-bypassed', type=click.BOOL, help=u"""Indicates whether or not the administrator user created in the IDCS stripe would like to receive notifications like a welcome email. This field is required only if admin information is provided. This field is otherwise optional.""")
+@cli_util.option('--is-primary-email-required', type=click.BOOL, help=u"""Optional field to indicate whether users in the identity domain are required to have a primary email address or not. The default is true.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1253,7 +1394,9 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the group.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed.""")
 @cli_util.option('--matching-rule', required=True, help=u"""The matching rule to dynamically match an instance certificate to this dynamic group. For rule syntax, see [Managing Dynamic Groups].""")
-@cli_util.option('--description', required=True, help=u"""The description you assign to the group during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the group during creation. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1324,7 +1467,9 @@ After you send your request, the new object's `lifecycleState` will temporarily 
 After creating the group, you need to put users in it and write policies for it. See [AddUserToGroup] and [CreatePolicy]. \n[Command Reference](createGroup)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the group.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the group during creation. The name must be unique across all groups in the tenancy and cannot be changed.""")
-@cli_util.option('--description', required=True, help=u"""The description you assign to the group during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the group during creation. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -1665,7 +1810,7 @@ After your network resource is created, you can use it in policy to restrict acc
 @cli_util.option('--virtual-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed VCN OCID and IP range pairs. Example:`\"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaaexampleuniqueID\", \"ipRanges\": [ \"129.213.39.0/24\" ]`
 
 This option is a JSON list with items of type NetworkSourcesVirtualSourceList.  For documentation on NetworkSources_virtualSourceList please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/NetworkSourcesVirtualSourceList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of services allowed to make on-behalf-of requests. These requests can have different source IP addresses than those listed in the network source. Currently, only `all` and `none` are supported. The default is `all`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""-- The services attribute has no effect and is reserved for use by Oracle. --""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option({'public-source-list': {'module': 'identity', 'class': 'list[string]'}, 'virtual-source-list': {'module': 'identity', 'class': 'list[NetworkSourcesVirtualSourceList]'}, 'services': {'module': 'identity', 'class': 'list[string]'}, 'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
@@ -1740,6 +1885,8 @@ def create_o_auth_client_credential(ctx, from_json, user_id, name, description, 
 
 Use this operation after creating a new user, or if a user forgets their password. The new one-time password is returned to you in the response, and you must securely deliver it to the user. They'll be prompted to change this password the next time they sign in to the Console. If they don't change it within 7 days, the password will expire and you'll need to create a new one-time password for the user.
 
+(For tenancies that support identity domains) Resetting a user's password generates a reset password email with a link that the user must follow to reset their password. If the user does not reset their password before the link expires, you'll need to reset the user's password again.
+
 **Note:** The user's Console login is the unique name you specified when you created the user (see [CreateUser]). \n[Command Reference](createOrResetUIPassword)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -1761,7 +1908,7 @@ def create_or_reset_ui_password(ctx, from_json, user_id):
     cli_util.render_response(result, ctx)
 
 
-@policy_group.command(name=cli_util.override('iam.create_policy.command_name', 'create'), help=u"""Creates a new policy in the specified compartment (either the tenancy or another of your compartments). If you're new to policies, see [Getting Started with Policies].
+@policy_group.command(name=cli_util.override('iam.create_policy.command_name', 'create'), help=u"""Creates a new policy in the specified compartment (either the tenancy or another of your compartments). If you're new to policies, see [Get Started with Policies].
 
 You must specify a *name* for the policy, which must be unique across all policies in your tenancy and cannot be changed.
 
@@ -1867,7 +2014,9 @@ def create_region_subscription(ctx, from_json, region_key, tenancy_id):
 
 
 @smtp_credential_group.command(name=cli_util.override('iam.create_smtp_credential.command_name', 'create'), help=u"""Creates a new SMTP credential for the specified user. An SMTP credential has an SMTP user name and an SMTP password. You must specify a *description* for the SMTP credential (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateSmtpCredential]. \n[Command Reference](createSmtpCredential)""")
-@cli_util.option('--description', required=True, help=u"""The description you assign to the SMTP credentials during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the SMTP credentials during creation. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1900,7 +2049,9 @@ Creates a new Swift password for the specified user. For information about what 
 You must specify a *description* for the Swift password (although it can be an empty string). It does not have to be unique, and you can change it anytime with [UpdateSwiftPassword].
 
 Every user has permission to create a Swift password for *their own user ID*. An administrator in your organization does not need to write a policy to give users this ability. To compare, administrators who have permission to the tenancy can use this operation to create a Swift password for any user, including themselves. \n[Command Reference](createSwiftPassword)""")
-@cli_util.option('--description', required=True, help=u"""The description you assign to the Swift password during creation. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the Swift password during creation. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -1948,6 +2099,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -1956,12 +2108,14 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator': {'module': 'identity', 'class': 'BaseTagDefinitionValidator'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def create_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, validator):
+def create_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, validator, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['name'] = name
@@ -2032,6 +2186,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
@@ -2040,12 +2195,14 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def create_tag_default_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking):
+def create_tag_default_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -2116,6 +2273,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2125,12 +2283,14 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator-values': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def create_tag_enum_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, validator_values):
+def create_tag_enum_tag_definition_validator(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, name, description, freeform_tags, defined_tags, is_cost_tracking, is_lock_override, validator_values):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -2196,15 +2356,18 @@ If you specify that a value is required, a value is set during resource creation
 * If the `isRequired` flag is set to \"true\", the value is set during resource creation. * If the `isRequired` flag is set to \"false\", the value you enter is set during resource creation.
 
 Example: `false`""")
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddLockDetails.  For documentation on AddLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/AddLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({})
+@json_skeleton_utils.get_cli_json_input_option({'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}}, output_type={'module': 'identity', 'class': 'TagDefault'})
 @cli_util.wrap_exceptions
-def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tag_definition_id, value, is_required):
+def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, tag_definition_id, value, is_required, locks):
 
     kwargs = {}
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -2216,6 +2379,9 @@ def create_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
     if is_required is not None:
         _details['isRequired'] = is_required
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag_default(
@@ -2264,15 +2430,18 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags].
 
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--locks', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Locks associated with this resource.
+
+This option is a JSON list with items of type AddLockDetails.  For documentation on AddLockDetails please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/AddLockDetails.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
 @cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
-@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}})
+@json_skeleton_utils.get_cli_json_input_option({'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}})
 @cli_util.help_option
 @click.pass_context
-@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'TagNamespace'})
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'locks': {'module': 'identity', 'class': 'list[AddLockDetails]'}}, output_type={'module': 'identity', 'class': 'TagNamespace'})
 @cli_util.wrap_exceptions
-def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags):
+def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, compartment_id, name, description, freeform_tags, defined_tags, locks):
 
     kwargs = {}
 
@@ -2286,6 +2455,9 @@ def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
 
     if defined_tags is not None:
         _details['definedTags'] = cli_util.parse_json_parameter("defined_tags", defined_tags)
+
+    if locks is not None:
+        _details['locks'] = cli_util.parse_json_parameter("locks", locks)
 
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.create_tag_namespace(
@@ -2318,7 +2490,7 @@ def create_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@user_group.command(name=cli_util.override('iam.create_user.command_name', 'create'), help=u"""Creates a new user in your tenancy. For conceptual information about users, your tenancy, and other IAM Service components, see [Overview of the IAM Service].
+@user_group.command(name=cli_util.override('iam.create_user.command_name', 'create'), help=u"""Creates a new user in your tenancy. For conceptual information about users, your tenancy, and other IAM Service components, see [Overview of IAM].
 
 You must specify your tenancy's OCID as the compartment ID in the request object (remember that the tenancy is simply the root compartment). Notice that IAM resources (users, groups, compartments, and some policies) reside within the tenancy itself, unlike cloud resources such as compute instances, which typically reside within compartments inside the tenancy. For information about OCIDs, see [Resource Identifiers].
 
@@ -2333,8 +2505,12 @@ A new user has no permissions until you place the user in one or more groups (se
 **Important:** Make sure to inform the new user which compartment(s) they have access to. \n[Command Reference](createUser)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the tenancy containing the user.""")
 @cli_util.option('--name', required=True, help=u"""The name you assign to the user during creation. This is the user's login for the Console. The name must be unique across all users in the tenancy and cannot be changed.""")
-@cli_util.option('--description', required=True, help=u"""The description you assign to the user during creation. Does not have to be unique, and it's changeable.""")
-@cli_util.option('--email', help=u"""The email you assign to the user. Has to be unique across the tenancy.""")
+@cli_util.option('--description', required=True, help=u"""The description you assign to the user during creation. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
+@cli_util.option('--email', help=u"""The email you assign to the user during creation. The email must be unique across all users in the tenancy.
+
+(For tenancies that support identity domains) You must provide an email for each user.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2394,12 +2570,12 @@ def create_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.deactivate_domain.command_name', 'deactivate'), help=u"""If the domain's {@code lifecycleState} is ACTIVE and no active Apps are present in domain, 1. Set the {@code lifecycleDetails} to DEACTIVATING and asynchronously starts disabling    the domain and return 202 ACCEPTED.     1.1 Sets the domain status to DISABLED and set specified domain's         {@code lifecycleState} to INACTIVE and set the {@code lifecycleDetails} to null.
+@domain_group.command(name=cli_util.override('iam.deactivate_domain.command_name', 'deactivate'), help=u"""(For tenancies that support identity domains) Deactivates the specified identity domain. Identity domains must be in an ACTIVE `lifecycleState` and have no active apps present in the domain or underlying Identity Cloud Service stripe. You cannot deactivate the default identity domain.
 
-To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status. Activate a domain can be done using HTTP POST /domains/{domainId}/actions/activate.
+After you send your request, the `lifecycleDetails` of this identity domain is set to DEACTIVATING. When the operation completes, then the `lifecycleDetails` is set to null and the `lifecycleState` is set to INACTIVE.
 
-- If the domain's {@code lifecycleState} is INACTIVE, returns 202 ACCEPTED with no action   taken on service side. - If domain is of {@code type} DEFAULT or DEFAULT_LIGHTWEIGHT or domain's {@code lifecycleState}   is not ACTIVE, returns 400 BAD REQUEST. - If the domain doesn't exists, returns 404 NOT FOUND. - If any active Apps in domain, returns 400 BAD REQUEST. - If the authenticated user is part of the domain to be activated, returns 400 BAD REQUEST - If error occurs while deactivating domain, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](deactivateDomain)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status. \n[Command Reference](deactivateDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -2564,7 +2740,7 @@ def delete_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
 
 @customer_secret_key_group.command(name=cli_util.override('iam.delete_customer_secret_key.command_name', 'delete'), help=u"""Deletes the specified secret key for the specified user. \n[Command Reference](deleteCustomerSecretKey)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
-@cli_util.option('--customer-secret-key-id', required=True, help=u"""The OCID of the secret key.""")
+@cli_util.option('--customer-secret-key-id', required=True, help=u"""The access token of the secret key.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -2623,12 +2799,10 @@ def delete_db_credential(ctx, from_json, user_id, db_credential_id, if_match):
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.delete_domain.command_name', 'delete'), help=u"""Soft Deletes a domain.
+@domain_group.command(name=cli_util.override('iam.delete_domain.command_name', 'delete'), help=u"""(For tenancies that support identity domains) Deletes an identity domain. The identity domain must have no active apps present in the underlying IDCS stripe. You must also deactivate the identity domain, rendering the `lifecycleState` of the identity domain INACTIVE. Furthermore, as the authenticated user performing the operation, you cannot be a member of the identity domain you are deleting. Lastly, you cannot delete the default identity domain. A tenancy must always have at least the default identity domain.
 
-This is an asynchronous API, where, if the domain's {@code lifecycleState} is INACTIVE and no active Apps are present in underlying stripe,   1. Sets the specified domain's {@code lifecycleState} to DELETING.   2. Domains marked as DELETING will be cleaned up by a periodic task unless customer request it to be undo via ticket.   3. Work request is created and returned as opc-work-request-id along with 202 ACCEPTED. To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
-
-- If the domain's {@code lifecycleState} is DELETING, returns 202 Accepted as a deletion   is already in progress for this domain. - If the domain doesn't exists, returns 404 NOT FOUND. - If domain is of {@code type} DEFAULT or DEFAULT_LIGHTWEIGHT, returns 400 BAD REQUEST. - If any active Apps in domain, returns 400 BAD REQUEST. - If the authenticated user is part of the domain to be deleted, returns 400 BAD REQUEST. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](deleteDomain)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status. \n[Command Reference](deleteDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -2932,7 +3106,7 @@ def delete_mfa_totp_device(ctx, from_json, user_id, mfa_totp_device_id, if_match
     cli_util.render_response(result, ctx)
 
 
-@network_sources_group.command(name=cli_util.override('iam.delete_network_source.command_name', 'delete'), help=u"""Deletes the specified network source \n[Command Reference](deleteNetworkSource)""")
+@network_sources_group.command(name=cli_util.override('iam.delete_network_source.command_name', 'delete'), help=u"""Deletes the specified network source. \n[Command Reference](deleteNetworkSource)""")
 @cli_util.option('--network-source-id', required=True, help=u"""The OCID of the network source.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.confirm_delete_option
@@ -3114,7 +3288,7 @@ def delete_swift_password(ctx, from_json, user_id, swift_password_id, if_match):
 
 @tag_group.command(name=cli_util.override('iam.delete_tag.command_name', 'delete'), help=u"""Deletes the specified tag definition. This operation triggers a process that removes the tag from all resources in your tenancy.
 
-These things happen immediately: \u00A0   * If the tag was a cost-tracking tag, it no longer counts against your 10 cost-tracking   tags limit, whether you first disabled it or not.   * If the tag was used with dynamic groups, none of the rules that contain the tag will   be evaluated against the tag.
+These things happen immediately:   * If the tag was a cost-tracking tag, it no longer counts against your 10 cost-tracking   tags limit, whether you first disabled it or not.   * If the tag was used with dynamic groups, none of the rules that contain the tag will   be evaluated against the tag.
 
 When you start the delete operation, the state of the tag changes to DELETING and tag removal from resources begins. This can take up to 48 hours depending on the number of resources that were tagged as well as the regions in which those resources reside.
 
@@ -3126,6 +3300,7 @@ To delete a tag, you must first retire it. Use [UpdateTag] to retire a tag. \n[C
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--tag-name', required=True, help=u"""The name of the tag.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACCEPTED", "IN_PROGRESS", "FAILED", "SUCCEEDED", "CANCELING", "CANCELED"]), multiple=True, help="""This operation asynchronously creates, modifies or deletes a resource and uses a work request to track the progress of the operation. Specify this option to perform the action and then wait until the work request reaches a certain state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the work request to reach the state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3135,7 +3310,7 @@ To delete a tag, you must first retire it. Use [UpdateTag] to retire a tag. \n[C
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, if_match):
+def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -3146,6 +3321,8 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag(
         tag_namespace_id=tag_namespace_id,
@@ -3181,6 +3358,7 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @tag_default_group.command(name=cli_util.override('iam.delete_tag_default.command_name', 'delete'), help=u"""Deletes the the specified tag default. \n[Command Reference](deleteTagDefault)""")
 @cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3190,7 +3368,7 @@ def delete_tag(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_s
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, if_match):
+def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, if_match, is_lock_override):
 
     if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
@@ -3198,6 +3376,8 @@ def delete_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_in
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag_default(
@@ -3249,6 +3429,7 @@ Use [CascadeDeleteTagNamespace] to delete a tag namespace along with all of the 
 Use [DeleteTag] to delete a tag definition. \n[Command Reference](deleteTagNamespace)""")
 @cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.confirm_delete_option
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -3258,7 +3439,7 @@ Use [DeleteTag] to delete a tag definition. \n[Command Reference](deleteTagNames
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={})
 @cli_util.wrap_exceptions
-def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match):
+def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -3266,6 +3447,8 @@ def delete_tag_namespace(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
     client = cli_util.build_client('identity', 'identity', ctx)
     result = client.delete_tag_namespace(
@@ -3373,13 +3556,13 @@ def delete_user(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.enable_replication_to_region.command_name', 'enable-replication-to-region'), help=u"""Replicate domain to a new region. This is an asynchronous call - where, at start, {@code state} of this domain in replica region is set to ENABLING_REPLICATION. On domain replication completion the {@code state} will be set to REPLICATION_ENABLED.
+@domain_group.command(name=cli_util.override('iam.enable_replication_to_region.command_name', 'enable-replication-to-region'), help=u"""(For tenancies that support identity domains) Replicates the identity domain to a new region (provided that the region is the tenancy home region or other region that the tenancy subscribes to). You can only replicate identity domains that are in an ACTIVE `lifecycleState` and not currently updating or already replicating. You also can only trigger the replication of secondary identity domains. The default identity domain is automatically replicated to all regions that the tenancy subscribes to.
 
-To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
+After you send the request, the `state` of the identity domain in the replica region is set to ENABLING_REPLICATION. When the operation completes, the `state` is set to REPLICATION_ENABLED.
 
-If the replica region's {@code state} is already ENABLING_REPLICATION or REPLICATION_ENABLED, returns 409 CONFLICT. - If the domain doesn't exists, returns 404 NOT FOUND. - If home region is same as replication region, return 400 BAD REQUEST. - If Domain is not active or being updated, returns 400 BAD REQUEST. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](enableReplicationToRegion)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
-@cli_util.option('--replica-region', help=u"""A region for which domain replication is requested for. See [Regions and Availability Domains] for the full list of supported region names.
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status. \n[Command Reference](enableReplicationToRegion)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
+@cli_util.option('--replica-region', help=u"""A region to which you want identity domain replication to occur. See [Regions and Availability Domains] for the full list of supported region names.
 
 Example: `us-phoenix-1`""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -3537,10 +3720,8 @@ def get_compartment(ctx, from_json, compartment_id):
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.get_domain.command_name', 'get'), help=u"""Get the specified domain's information.
-
-- If the domain doesn't exists, returns 404 NOT FOUND. - If any internal error occurs, returns 500 INTERNAL SERVER ERROR. \n[Command Reference](getDomain)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
+@domain_group.command(name=cli_util.override('iam.get_domain.command_name', 'get'), help=u"""(For tenancies that support identity domains) Gets the specified identity domain's information. \n[Command Reference](getDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
 @click.pass_context
@@ -3605,9 +3786,7 @@ def get_group(ctx, from_json, group_id):
     cli_util.render_response(result, ctx)
 
 
-@iam_work_request_group.command(name=cli_util.override('iam.get_iam_work_request.command_name', 'get'), help=u"""Gets details on a specified IAM work request. For asynchronous operations in Identity and Access Management service, opc-work-request-id header values contains iam work request id that can be provided in this API to track the current status of the operation.
-
-- If workrequest exists, returns 202 ACCEPTED - If workrequest does not exist, returns 404 NOT FOUND \n[Command Reference](getIamWorkRequest)""")
+@iam_work_request_group.command(name=cli_util.override('iam.get_iam_work_request.command_name', 'get'), help=u"""Gets the details of a specified IAM work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service. \n[Command Reference](getIamWorkRequest)""")
 @cli_util.option('--iam-work-request-id', required=True, help=u"""The OCID of the IAM work request.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4016,10 +4195,10 @@ def import_standard_tags(ctx, from_json, wait_for_state, max_wait_seconds, wait_
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.list_allowed_domain_license_types.command_name', 'list-allowed-domain-license-types'), help=u"""List the allowed domain license types supported by OCI If {@code currentLicenseTypeName} provided, returns allowed license types a domain with the specified license type name can migrate to. If {@code name} is provided, it filters and returns resources that match the given license type name. Otherwise, returns all valid license types that are currently supported.
+@domain_group.command(name=cli_util.override('iam.list_allowed_domain_license_types.command_name', 'list-allowed-domain-license-types'), help=u"""(For tenancies that support identity domains) Lists the license types for identity domains supported by Oracle Cloud Infrastructure. (License types are also referred to as domain types.)
 
-- If license type details are retrieved sucessfully, return 202 ACCEPTED. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](listAllowedDomainLicenseTypes)""")
-@cli_util.option('--current-license-type-name', help=u"""The domain license type""")
+If `currentLicenseTypeName` is provided, then the request returns license types that the identity domain with the specified license type name can change to. Otherwise, the request returns all valid license types currently supported. \n[Command Reference](listAllowedDomainLicenseTypes)""")
+@cli_util.option('--current-license-type-name', help=u"""The license type of the identity domain.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4405,14 +4584,14 @@ def list_db_credentials(ctx, from_json, all_pages, page_size, user_id, page, lim
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.list_domains.command_name', 'list'), help=u"""List all domains that are homed or have a replica region in current region. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](listDomains)""")
+@domain_group.command(name=cli_util.override('iam.list_domains.command_name', 'list'), help=u"""(For tenancies that support identity domains) Lists all identity domains within a tenancy. \n[Command Reference](listDomains)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--display-name', help=u"""The mutable display name of the domain""")
-@cli_util.option('--url', help=u"""The region agnostic domain URL""")
-@cli_util.option('--home-region-url', help=u"""The region specific domain URL""")
-@cli_util.option('--type', help=u"""The domain type""")
-@cli_util.option('--license-type', help=u"""The domain license type""")
-@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicate if the domain is visible at login screen or not""")
+@cli_util.option('--display-name', help=u"""The mutable display name of the identity domain.""")
+@cli_util.option('--url', help=u"""The region-agnostic identity domain URL.""")
+@cli_util.option('--home-region-url', help=u"""The region-specific identity domain URL.""")
+@cli_util.option('--type', help=u"""The identity domain type.""")
+@cli_util.option('--license-type', help=u"""The license type of the identity domain.""")
+@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicates whether or not the identity domain is visible at the sign-in screen.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--name', help=u"""A filter to only return resources that match the given name exactly.""")
@@ -4420,7 +4599,7 @@ def list_db_credentials(ctx, from_json, all_pages, page_size, user_id, page, lim
 
 **Note:** In general, some \"List\" operations (for example, `ListInstances`) let you optionally filter by Availability Domain if the scope of the resource type is within a single Availability Domain. If you call one of these \"List\" operations without specifying an Availability Domain, the resources are grouped by Availability Domain, then sorted.""")
 @cli_util.option('--sort-order', type=custom_types.CliCaseInsensitiveChoice(["ASC", "DESC"]), help=u"""The sort order to use, either ascending (`ASC`) or descending (`DESC`). The NAME sort order is case sensitive.""")
-@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "INACTIVE"]), help=u"""A filter to only return resources that match the given lifecycle state.  The state value is case-insensitive.""")
+@cli_util.option('--lifecycle-state', type=custom_types.CliCaseInsensitiveChoice(["CREATING", "ACTIVE", "DELETING", "INACTIVE"]), help=u"""A filter to only return resources that match the given lifecycle state. The state value is case-insensitive.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results. If you provide this option, then you cannot provide the --limit option.""")
 @cli_util.option('--page-size', type=click.INT, help="""When fetching results, the number of results to fetch per call. Only valid when used with --all or --limit, and ignored otherwise.""")
 @json_skeleton_utils.get_cli_json_input_option({})
@@ -4548,7 +4727,7 @@ def list_dynamic_groups(ctx, from_json, all_pages, page_size, compartment_id, pa
 
 @fault_domain_group.command(name=cli_util.override('iam.list_fault_domains.command_name', 'list'), help=u"""Lists the Fault Domains in your tenancy. Specify the OCID of either the tenancy or another of your compartments as the value for the compartment ID (remember that the tenancy is simply the root compartment). See [Where to Get the Tenancy's OCID and User's OCID]. \n[Command Reference](listFaultDomains)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
-@cli_util.option('--availability-domain', required=True, help=u"""The name of the availibilityDomain.""")
+@cli_util.option('--availability-domain', required=True, help=u"""The name of the availabilityDomain.""")
 @cli_util.option('--all', 'all_pages', is_flag=True, help="""Fetches all pages of results.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -4628,9 +4807,7 @@ def list_groups(ctx, from_json, all_pages, page_size, compartment_id, page, limi
     cli_util.render_response(result, ctx)
 
 
-@iam_work_request_group.command(name=cli_util.override('iam.list_iam_work_request_errors.command_name', 'list-iam-work-request-errors'), help=u"""Gets error details for a specified IAM work request. For asynchronous operations in Identity and Access Management service, opc-work-request-id header values contains iam work request id that can be provided in this API to track the current status of the operation.
-
-- If workrequest exists, returns 202 ACCEPTED - If workrequest does not exist, returns 404 NOT FOUND \n[Command Reference](listIamWorkRequestErrors)""")
+@iam_work_request_group.command(name=cli_util.override('iam.list_iam_work_request_errors.command_name', 'list-iam-work-request-errors'), help=u"""Gets error details for a specified IAM work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service. \n[Command Reference](listIamWorkRequestErrors)""")
 @cli_util.option('--iam-work-request-id', required=True, help=u"""The OCID of the IAM work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -4684,9 +4861,7 @@ def list_iam_work_request_errors(ctx, from_json, all_pages, page_size, iam_work_
     cli_util.render_response(result, ctx)
 
 
-@iam_work_request_log_group.command(name=cli_util.override('iam.list_iam_work_request_logs.command_name', 'list'), help=u"""Gets logs for a specified IAM work request. For asynchronous operations in Identity and Access Management service, opc-work-request-id header values contains iam work request id that can be provided in this API to track the current status of the operation.
-
-- If workrequest exists, returns 202 ACCEPTED - If workrequest does not exist, returns 404 NOT FOUND \n[Command Reference](listIamWorkRequestLogs)""")
+@iam_work_request_log_group.command(name=cli_util.override('iam.list_iam_work_request_logs.command_name', 'list'), help=u"""Gets logs for a specified IAM work request. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service. \n[Command Reference](listIamWorkRequestLogs)""")
 @cli_util.option('--iam-work-request-id', required=True, help=u"""The OCID of the IAM work request.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
@@ -4740,9 +4915,7 @@ def list_iam_work_request_logs(ctx, from_json, all_pages, page_size, iam_work_re
     cli_util.render_response(result, ctx)
 
 
-@iam_work_request_group.command(name=cli_util.override('iam.list_iam_work_requests.command_name', 'list'), help=u"""List the IAM work requests in compartment
-
-- If IAM workrequest  details are retrieved sucessfully, return 202 ACCEPTED. - If any internal error occurs, return 500 INTERNAL SERVER ERROR. \n[Command Reference](listIamWorkRequests)""")
+@iam_work_request_group.command(name=cli_util.override('iam.list_iam_work_requests.command_name', 'list'), help=u"""Lists the IAM work requests in compartment. The workRequestID is returned in the opc-workrequest-id header for any asynchronous operation in the Identity and Access Management service. \n[Command Reference](listIamWorkRequests)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment (remember that the tenancy is simply the root compartment).""")
 @cli_util.option('--page', help=u"""The value of the `opc-next-page` response header from the previous \"List\" call.""")
 @cli_util.option('--limit', type=click.INT, help=u"""The maximum number of items to return in a paginated \"List\" call.""")
@@ -5930,6 +6103,120 @@ def recover_compartment(ctx, from_json, wait_for_state, max_wait_seconds, wait_i
     cli_util.render_response(result, ctx)
 
 
+@tag_default_group.command(name=cli_util.override('iam.remove_tag_default_lock.command_name', 'remove'), help=u"""Remove a resource lock from a tag default. \n[Command Reference](removeTagDefaultLock)""")
+@cli_util.option('--tag-default-id', required=True, help=u"""The OCID of the tag default.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
+@cli_util.wrap_exceptions
+def remove_tag_default_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, type, if_match):
+
+    if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.remove_tag_default_lock(
+        tag_default_id=tag_default_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_default') and callable(getattr(client, 'get_tag_default')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_default(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
+@tag_namespace_group.command(name=cli_util.override('iam.remove_tag_namespace_lock.command_name', 'remove'), help=u"""Remove a resource lock from a tag namespace. \n[Command Reference](removeTagNamespaceLock)""")
+@cli_util.option('--tag-namespace-id', required=True, help=u"""The OCID of the tag namespace.""")
+@cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["FULL", "DELETE"]), help=u"""Type of the lock.""")
+@cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
+@cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
+@cli_util.option('--wait-interval-seconds', type=click.INT, help="""Check every --wait-interval-seconds to see whether the resource to see if it has reached the lifecycle state defined by --wait-for-state. Defaults to 30 seconds.""")
+@json_skeleton_utils.get_cli_json_input_option({})
+@cli_util.help_option
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagNamespace'})
+@cli_util.wrap_exceptions
+def remove_tag_namespace_lock(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, type, if_match):
+
+    if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
+        raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
+
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+    kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
+
+    _details = {}
+    _details['type'] = type
+
+    client = cli_util.build_client('identity', 'identity', ctx)
+    result = client.remove_tag_namespace_lock(
+        tag_namespace_id=tag_namespace_id,
+        remove_lock_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_tag_namespace') and callable(getattr(client, 'get_tag_namespace')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = oci.wait_until(client, client.get_tag_namespace(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except oci.exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
+
+
 @user_group_membership_group.command(name=cli_util.override('iam.remove_user_from_group.command_name', 'remove'), help=u"""Removes a user from a group by deleting the corresponding `UserGroupMembership`. \n[Command Reference](removeUserFromGroup)""")
 @cli_util.option('--user-group-membership-id', required=True, help=u"""The OCID of the userGroupMembership.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -5979,7 +6266,9 @@ def reset_idp_scim_client(ctx, from_json, identity_provider_id):
 @auth_token_group.command(name=cli_util.override('iam.update_auth_token.command_name', 'update'), help=u"""Updates the specified auth token's description. \n[Command Reference](updateAuthToken)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--auth-token-id', required=True, help=u"""The OCID of the auth token.""")
-@cli_util.option('--description', help=u"""The description you assign to the auth token. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description you assign to the auth token. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6013,7 +6302,7 @@ def update_auth_token(ctx, from_json, user_id, auth_token_id, description, if_ma
     cli_util.render_response(result, ctx)
 
 
-@authentication_policy_group.command(name=cli_util.override('iam.update_authentication_policy.command_name', 'update'), help=u"""Updates authentication policy for the specified tenancy \n[Command Reference](updateAuthenticationPolicy)""")
+@authentication_policy_group.command(name=cli_util.override('iam.update_authentication_policy.command_name', 'update'), help=u"""Updates authentication policy for the specified tenancy. \n[Command Reference](updateAuthenticationPolicy)""")
 @cli_util.option('--compartment-id', required=True, help=u"""The OCID of the compartment.""")
 @cli_util.option('--password-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--network-policy', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6131,8 +6420,10 @@ def update_compartment(ctx, from_json, force, wait_for_state, max_wait_seconds, 
 
 @customer_secret_key_group.command(name=cli_util.override('iam.update_customer_secret_key.command_name', 'update'), help=u"""Updates the specified secret key's description. \n[Command Reference](updateCustomerSecretKey)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
-@cli_util.option('--customer-secret-key-id', required=True, help=u"""The OCID of the secret key.""")
-@cli_util.option('--display-name', help=u"""The description you assign to the secret key. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--customer-secret-key-id', required=True, help=u"""The access token of the secret key.""")
+@cli_util.option('--display-name', help=u"""The description you assign to the secret key. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6166,15 +6457,13 @@ def update_customer_secret_key(ctx, from_json, user_id, customer_secret_key_id, 
     cli_util.render_response(result, ctx)
 
 
-@domain_group.command(name=cli_util.override('iam.update_domain.command_name', 'update'), help=u"""Updates domain information and associated stripe. This is an asynchronous call where the associated stripe and domain are updated.
+@domain_group.command(name=cli_util.override('iam.update_domain.command_name', 'update'), help=u"""(For tenancies that support identity domains) Updates identity domain information and the associated Identity Cloud Service (IDCS) stripe.
 
-To track progress, HTTP GET on /iamWorkRequests/{iamWorkRequestsId} endpoint will provide the async operation's status.
-
-- If the {@code displayName} is not unique within the tenancy, returns 400 BAD REQUEST. - If any field other than {@code description} is requested to be updated for DEFAULT domain, returns 400 BAD REQUEST. - If Domain is not active or being updated, returns 400 BAD REQUEST. - If Domain {@code type} is DEFAULT or DEFAULT_LIGHTWEIGHT, return 400 BAD Request - If the domain doesn't exists, returns 404 NOT FOUND. \n[Command Reference](updateDomain)""")
-@cli_util.option('--domain-id', required=True, help=u"""The OCID of the domain""")
-@cli_util.option('--description', help=u"""The domain description""")
-@cli_util.option('--display-name', help=u"""The mutable display name of the domain""")
-@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicates whether domain is hidden on login screen or not.""")
+To track the progress of the request, submitting an HTTP GET on the /iamWorkRequests/{iamWorkRequestsId} endpoint retrieves the operation's status. \n[Command Reference](updateDomain)""")
+@cli_util.option('--domain-id', required=True, help=u"""The OCID of the identity domain.""")
+@cli_util.option('--description', help=u"""The identity domain description. You can have an empty description.""")
+@cli_util.option('--display-name', help=u"""The mutable display name of the identity domain.""")
+@cli_util.option('--is-hidden-on-login', type=click.BOOL, help=u"""Indicates whether the identity domain is hidden on the sign-in screen or not.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6252,7 +6541,9 @@ def update_domain(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 
 @dynamic_group_group.command(name=cli_util.override('iam.update_dynamic_group.command_name', 'update'), help=u"""Updates the specified dynamic group. \n[Command Reference](updateDynamicGroup)""")
 @cli_util.option('--dynamic-group-id', required=True, help=u"""The OCID of the dynamic group.""")
-@cli_util.option('--description', help=u"""The description you assign to the dynamic group. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description you assign to the dynamic group. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--matching-rule', help=u"""The matching rule to dynamically match an instance certificate to this dynamic group. For rule syntax, see [Managing Dynamic Groups].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
@@ -6327,7 +6618,9 @@ def update_dynamic_group(ctx, from_json, force, wait_for_state, max_wait_seconds
 
 @group_group.command(name=cli_util.override('iam.update_group.command_name', 'update'), help=u"""Updates the specified group. \n[Command Reference](updateGroup)""")
 @cli_util.option('--group-id', required=True, help=u"""The OCID of the group.""")
-@cli_util.option('--description', help=u"""The description you assign to the group. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description you assign to the group. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6636,7 +6929,7 @@ def update_idp_group_mapping(ctx, from_json, wait_for_state, max_wait_seconds, w
 @cli_util.option('--virtual-source-list', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of allowed VCN OCID and IP range pairs. Example:`\"vcnId\": \"ocid1.vcn.oc1.iad.aaaaaaaaexampleuniqueID\", \"ipRanges\": [ \"129.213.39.0/24\" ]`
 
 This option is a JSON list with items of type NetworkSourcesVirtualSourceList.  For documentation on NetworkSources_virtualSourceList please see our API reference: https://docs.cloud.oracle.com/api/#/en/identity/20160918/datatypes/NetworkSourcesVirtualSourceList.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
-@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""A list of services allowed to make on-behalf-of requests. These requests can have different source IPs than those specified in the network source. Currently, only `all` and `none` are supported. The default is `all`.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--services', type=custom_types.CLI_COMPLEX_TYPE, help=u"""-- The services attribute has no effect and is reserved for use by Oracle. --""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
@@ -6818,7 +7111,9 @@ def update_policy(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_
 @smtp_credential_group.command(name=cli_util.override('iam.update_smtp_credential.command_name', 'update'), help=u"""Updates the specified SMTP credential's description. \n[Command Reference](updateSmtpCredential)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--smtp-credential-id', required=True, help=u"""The OCID of the SMTP credential.""")
-@cli_util.option('--description', help=u"""The description you assign to the SMTP credential. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description you assign to the SMTP credential. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6857,7 +7152,9 @@ def update_smtp_credential(ctx, from_json, user_id, smtp_credential_id, descript
 Updates the specified Swift password's description. \n[Command Reference](updateSwiftPassword)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
 @cli_util.option('--swift-password-id', required=True, help=u"""The OCID of the Swift password.""")
-@cli_util.option('--description', help=u"""The description you assign to the Swift password. Does not have to be unique, and it's changeable.""")
+@cli_util.option('--description', help=u"""The description you assign to the Swift password. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -6909,6 +7206,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--validator', type=custom_types.CLI_COMPLEX_TYPE, help=u"""""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -6918,7 +7216,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator': {'module': 'identity', 'class': 'BaseTagDefinitionValidator'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, validator, if_match):
+def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, validator, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -6933,6 +7231,8 @@ def update_tag(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_int
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
 
@@ -7004,6 +7304,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7013,7 +7314,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match):
+def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -7028,6 +7329,8 @@ def update_tag_default_tag_definition_validator(ctx, from_json, force, wait_for_
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -7099,6 +7402,7 @@ Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMP
 Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--is-cost-tracking', type=click.BOOL, help=u"""Indicates whether the tag is enabled for cost tracking.""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--validator-values', type=custom_types.CLI_COMPLEX_TYPE, help=u"""The list of allowed values for a definedTag value.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
@@ -7109,7 +7413,7 @@ Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_comp
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}, 'validator-values': {'module': 'identity', 'class': 'list[string]'}}, output_type={'module': 'identity', 'class': 'Tag'})
 @cli_util.wrap_exceptions
-def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match, validator_values):
+def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, tag_name, description, is_retired, freeform_tags, defined_tags, is_cost_tracking, if_match, is_lock_override, validator_values):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -7124,6 +7428,8 @@ def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_sta
     kwargs = {}
     if if_match is not None:
         kwargs['if_match'] = if_match
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
     _details['validator'] = {}
@@ -7191,6 +7497,7 @@ def update_tag_enum_tag_definition_validator(ctx, from_json, force, wait_for_sta
 * If the `isRequired` flag is set to \"true\", the value is set during resource creation. * If the `isRequired` flag is set to \"false\", the value you enter is set during resource creation.
 
 Example: `false`""")
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--if-match', help=u"""For optimistic concurrency control. In the PUT or DELETE call for a resource, set the `if-match` parameter to the value of the etag from a previous GET or POST response for that resource.  The resource will be updated or deleted only if the etag you provide matches the resource's current etag value.""")
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7200,12 +7507,14 @@ Example: `false`""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'identity', 'class': 'TagDefault'})
 @cli_util.wrap_exceptions
-def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, value, is_required, if_match):
+def update_tag_default(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_default_id, value, is_required, is_lock_override, if_match):
 
     if isinstance(tag_default_id, six.string_types) and len(tag_default_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-default-id cannot be whitespace or empty string')
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
     if if_match is not None:
         kwargs['if_match'] = if_match
     kwargs['opc_request_id'] = cli_util.use_or_generate_request_id(ctx.obj['request_id'])
@@ -7258,6 +7567,7 @@ You can't add a namespace with the same name as a retired namespace in the same 
 @cli_util.option('--is-retired', type=click.BOOL, help=u"""Whether the tag namespace is retired. See [Retiring Key Definitions and Namespace Definitions].""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--is-lock-override', type=click.BOOL, help=u"""Whether to override locks (if any exist).""")
 @cli_util.option('--force', help="""Perform update without prompting for confirmation.""", is_flag=True)
 @cli_util.option('--wait-for-state', type=custom_types.CliCaseInsensitiveChoice(["ACTIVE", "INACTIVE", "DELETING", "DELETED"]), multiple=True, help="""This operation creates, modifies or deletes a resource that has a defined lifecycle state. Specify this option to perform the action and then wait until the resource reaches a given lifecycle state. Multiple states can be specified, returning on the first state. For example, --wait-for-state SUCCEEDED --wait-for-state FAILED would return on whichever lifecycle state is reached first. If timeout is reached, a return code of 2 is returned. For any other error, a return code of 1 is returned.""")
 @cli_util.option('--max-wait-seconds', type=click.INT, help="""The maximum time to wait for the resource to reach the lifecycle state defined by --wait-for-state. Defaults to 1200 seconds.""")
@@ -7267,7 +7577,7 @@ You can't add a namespace with the same name as a retired namespace in the same 
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'freeform-tags': {'module': 'identity', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'identity', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'identity', 'class': 'TagNamespace'})
 @cli_util.wrap_exceptions
-def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, description, is_retired, freeform_tags, defined_tags):
+def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds, wait_interval_seconds, tag_namespace_id, description, is_retired, freeform_tags, defined_tags, is_lock_override):
 
     if isinstance(tag_namespace_id, six.string_types) and len(tag_namespace_id.strip()) == 0:
         raise click.UsageError('Parameter --tag-namespace-id cannot be whitespace or empty string')
@@ -7277,6 +7587,8 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
                 ctx.abort()
 
     kwargs = {}
+    if is_lock_override is not None:
+        kwargs['is_lock_override'] = is_lock_override
 
     _details = {}
 
@@ -7326,8 +7638,12 @@ def update_tag_namespace(ctx, from_json, force, wait_for_state, max_wait_seconds
 
 @user_group.command(name=cli_util.override('iam.update_user.command_name', 'update'), help=u"""Updates the description of the specified user. \n[Command Reference](updateUser)""")
 @cli_util.option('--user-id', required=True, help=u"""The OCID of the user.""")
-@cli_util.option('--description', help=u"""The description you assign to the user. Does not have to be unique, and it's changeable.""")
-@cli_util.option('--email', help=u"""The email address you assign to the user. Has to be unique across the tenancy.""")
+@cli_util.option('--description', help=u"""The description you assign to the user. Does not have to be unique, and it's changeable.
+
+(For tenancies that support identity domains) You can have an empty description.""")
+@cli_util.option('--email', help=u"""The email you assign to the user during creation. The email must be unique across all users in the tenancy.
+
+(For tenancies that support identity domains) You must provide an email for each user.""")
 @cli_util.option('--db-user-name', help=u"""DB username of the DB credential. Has to be unique across the tenancy.""")
 @cli_util.option('--freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for this resource. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for this resource. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)

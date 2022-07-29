@@ -25,6 +25,7 @@ from . import cli_constants     # noqa: E402
 from collections import OrderedDict     # noqa: E402
 from oci._vendor import requests    # noqa: E402
 from . import cli_metrics    # noqa: E402
+from interactive import cli_interactive    # noqa: E402
 from .service_mapping import service_mapping    # noqa: E402
 
 # Enable WARN logging to surface important warnings attached to loading
@@ -314,6 +315,8 @@ For information on configuration, see https://docs.cloud.oracle.com/Content/API/
               help='The request id to use for tracking the request.')
 @click.option('--region', callback=read_values_from_env, help='The region to make calls against.  For a list of valid region names use the command: "oci iam region list".')
 @click.option('--endpoint', callback=read_values_from_env, help='The value to use as the service endpoint, including any required API version path. For example: "https://iaas.us-phoenix-1.oracle.com/20160918". This will override the default service endpoint / API version path. Note: The --region parameter is the recommended way of targeting different regions.')
+@click.option('--connection-timeout', 'connection_timeout', type=click.INT, callback=read_values_from_env, help='The value of the connection timeout in seconds to make establish connection from sdk to services. This will override the default connection timeout value of 10 secs. ')
+@click.option('--read-timeout', 'read_timeout', type=click.INT, callback=read_values_from_env, help='The value of the read timeout in seconds to wait for service calls to send response to sdk. This will override the default read timeout value of 60 secs. ')
 @click.option('--cert-bundle', callback=read_values_from_env, help='The full path to a CA certificate bundle to be used for SSL verification. This will override the default CA certificate bundle.')
 @click.option('--output', type=click.Choice(choices=['json', 'table']), help='The output format. [Default is json]')
 @click.option('--query', help="""JMESPath query [http://jmespath.org/] to run on the response JSON before output.
@@ -332,20 +335,21 @@ When passed the name of an option which takes complex input, this will print out
 @click.option('--no-retry', is_flag=True, help='Disable retry logic for calls to services.')
 @click.option('--max-retries', type=click.INT, help='Maximum number of retry calls to be made to the service. For most commands, 5 attempts will be made. For operations with binary bodies, retries are disabled')
 @click.option('-d', '--debug', is_flag=True, help='Show additional debug information.')
+@click.option('-i', '--cli-auto-prompt', is_flag=True, help='Use the CLI in interactive mode.')
 @click.option('-?', '-h', '--help', is_flag=True, help='For detailed help on the individual OCI CLI command, enter <command> --help.')
 @click.pass_context
-def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, help):
+def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, cert_bundle, output, query, raw_output, auth, auth_purpose, no_retry, max_retries, generate_full_command_json_input, generate_param_json_input, debug, cli_auto_prompt, connection_timeout, read_timeout, help):
 
     if max_retries and no_retry:
         raise click.UsageError('The option --max-retries is not applicable when using the --no-retry flag.')
 
     # Show help in any case if there are no subcommands, or if the help option
     # is used but there are subcommands, then set a flag for user later.
-    if not ctx.invoked_subcommand:
+    if not ctx.invoked_subcommand and not (cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ or cli_auto_prompt):
         echo_help(ctx)
         sys.exit()
 
-    if profile == Sentinel(DEFAULT_PROFILE):
+    if str(profile) == str(Sentinel(DEFAULT_PROFILE)):
         # if --profile is not supplied, fallback accordingly:
         #   - if OCI_CLI_PROFILE exists, use that
         #   - if default_profile is specified in oci_cli_rc then use that
@@ -375,6 +379,8 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
         'request_id': request_id,
         'region': region,
         'endpoint': endpoint,
+        'connection_timeout': connection_timeout,
+        'read_timeout': read_timeout,
         'cert_bundle': cert_bundle,
         'output': output,
         'query': query,
@@ -415,6 +421,11 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
     except Exception:
         pass
 
+    # Show auto prompt mode for the user
+    if cli_auto_prompt_env() or cli_auto_prompt:
+        cli_interactive.start_interactive_mode(ctx)
+        ctx.exit()
+
     if ctx.obj['debug']:
         import platform
         click.echo(platform.platform())
@@ -424,6 +435,13 @@ def cli(ctx, config_file, profile, cli_rc_file, request_id, region, endpoint, ce
         for env in os.environ:
             if env in ['http_proxy', 'HTTP_PROXY', 'https_proxy', 'HTTPS_PROXY', 'no_proxy', 'NO_PROXY', 'REQUESTS_CA_BUNDLE'] or 'OCI_' in env:
                 print("env {} is set".format(env))
+
+
+def cli_auto_prompt_env():
+    if cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR in os.environ:
+        os.environ.pop(cli_constants.OCI_CLI_AUTO_PROMPT_ENV_VAR)
+        return True
+    return False
 
 
 def is_top_level_help(ctx):

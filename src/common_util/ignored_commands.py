@@ -68,6 +68,8 @@ IGNORED_COMMANDS = [
     ['os', 'retention-rule', 'update'],
     ['data-flow', 'application', 'create'],
     ['data-flow', 'application', 'update'],
+    ['data-flow', 'run', 'create'],
+    ['data-flow', 'run', 'submit'],
     # input requires a valid file to upload
     ['data-science', 'model', 'create-model-artifact'],
     ['data-science', 'job', 'create-job-artifact'],
@@ -91,6 +93,7 @@ IGNORED_COMMANDS = [
     ['data-integration', 'task-validation', 'create-from-pipeline-task'],
     ['data-integration', 'task', 'update-pipeline-task'],
     ['data-integration', 'task', 'create-pipeline-task'],
+    ['data-integration', 'task', 'create-task-from-rest-task'],
     ['dns', 'resolver', 'update'],
     # this command expects either src-dir or dest-dir as param, so this can't be tested here
     ['os', 'object', 'sync'],
@@ -108,6 +111,28 @@ IGNORED_COMMANDS = [
     ['resource-manager', 'job', 'create-destroy-job'],
     ['setup', 'find-installations'],
     ['iam', 'db-token', 'get'],
+    ['data-connectivity', 'data-entity', 'create-entity-shape'],
+    ['data-connectivity', 'endpoint', 'list'],
+    ['data-connectivity', 'full-push-down-task-response', 'create-full-push-down-task'],
+    ['data-connectivity', 'registry', 'list'],
+    ['mysql', 'db-system', 'import'],
+    ['devops', 'deploy-environment', 'update-oke-cluster-environment'],
+    ['db', 'backup', 'list'],
+    ['speech', 'transcription-job', 'create'],
+    ['opsi', 'opsi-data-objects', 'query-data-templatized-query'],
+    ['opsi', 'opsi-data-objects', 'get'],
+    ['opsi', 'opsi-data-objects', 'list'],
+    ['db', 'cloud-vm-cluster', 'create'],
+    ['db', 'cloud-vm-cluster', 'update'],
+    ['opsi', 'host-insights', 'list'],
+    ['compute', 'instance', 'action'],
+    ['oma', 'lockboxes', 'list'],
+    ['media-services', 'media-asset-distribution-channel-attachment-collection'],
+    ['media-services', 'media-workflow-configuration-collection'],
+    ['db', 'autonomous-database', 'delete'],
+    ['resource-manager', 'stack', 'create-from-template'],
+    ['data-science', 'notebook-session', 'create'],
+    ['data-science', 'notebook-session', 'update']
 ]
 
 IGNORED_COMMANDS_DOCS = [

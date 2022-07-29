@@ -108,15 +108,37 @@ containerengine_cli.cluster_group.add_command(generate_token)
 @cli_util.option('--services-cidr', help="""The available group of network addresses that can be exposed as Kubernetes\
  services (ClusterIPs), expressed as a single, contiguous IPv4 CIDR block. For example, 10.96.0.0/16.""")
 @cli_util.option('--endpoint-subnet-id', help="""The OCID of the regional subnet in which to place the Cluster endpoint.""")
+@cli_util.option('--service-lb-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for the service load balancer. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--service-lb-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for the service load balancer. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--persistent-volume-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for the persistent volume. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--persistent-volume-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for the persistent volume. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""A list of the OCIDs of the network\
  security groups (NSGs) to apply to the cluster endpoint. You must also specify --endpoint-subnet-id.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--endpoint-public-ip-enabled', type=click.BOOL, help="""Whether the cluster should be assigned a public\
  IP address. Defaults to false. If set to true on a private subnet, the cluster provisioning will fail. You must also specify --endpoint-subnet-id.""")
 @json_skeleton_utils.get_cli_json_input_option(
-    {'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'image-policy-config': {'module': 'container_engine', 'class': 'UpdateImagePolicyConfigDetails'}})
+    {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+     'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'service-lb-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+     'service-lb-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+     'persistent-volume-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'},
+     'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
-    input_params_to_complex_types={'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}, 'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'}})
+    input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+                                   'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'service-lb-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'endpoint-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'service-lb-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+                                   'service-lb-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'persistent-volume-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+                                   'persistent-volume-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'image-policy-config': {'module': 'container_engine', 'class': 'CreateImagePolicyConfigDetails'},
+                                   'cluster-pod-network-options': {'module': 'container_engine', 'class': 'list[ClusterPodNetworkOptionDetails]'}})
 @cli_util.wrap_exceptions
 def create_cluster(ctx, **kwargs):
     kwargs['options'] = {}
@@ -147,6 +169,28 @@ def create_cluster(ctx, **kwargs):
         kwargs['options']['kubernetesNetworkConfig']['servicesCidr'] = kwargs['services_cidr']
     kwargs.pop('services_cidr', None)
 
+    if 'persistent_volume_freeform_tags' in kwargs and kwargs['persistent_volume_freeform_tags'] is not None:
+        kwargs['options']['persistentVolumeConfig'] = {}
+        kwargs['options']['persistentVolumeConfig']['freeformTags'] = cli_util.parse_json_parameter("persistent_volume_freeform_tags", kwargs['persistent_volume_freeform_tags'])
+    kwargs.pop('persistent_volume_freeform_tags', None)
+
+    if 'persistent_volume_defined_tags' in kwargs and kwargs['persistent_volume_defined_tags'] is not None:
+        if 'persistentVolumeConfig' not in kwargs['options']:
+            kwargs['options']['persistentVolumeConfig'] = {}
+        kwargs['options']['persistentVolumeConfig']['definedTags'] = cli_util.parse_json_parameter("persistent_volume_defined_tags", kwargs['persistent_volume_defined_tags'])
+    kwargs.pop('persistent_volume_defined_tags', None)
+
+    if 'service_lb_freeform_tags' in kwargs and kwargs['service_lb_freeform_tags'] is not None:
+        kwargs['options']['serviceLbConfig'] = {}
+        kwargs['options']['serviceLbConfig']['freeformTags'] = cli_util.parse_json_parameter("service_lb_freeform_tags", kwargs['service_lb_freeform_tags'])
+    kwargs.pop('service_lb_freeform_tags', None)
+
+    if 'service_lb_defined_tags' in kwargs and kwargs['service_lb_defined_tags'] is not None:
+        if 'serviceLbConfig' not in kwargs['options']:
+            kwargs['options']['serviceLbConfig'] = {}
+        kwargs['options']['serviceLbConfig']['definedTags'] = cli_util.parse_json_parameter("service_lb_defined_tags", kwargs['service_lb_defined_tags'])
+    kwargs.pop('service_lb_defined_tags', None)
+
     if kwargs.get('endpoint_nsg_ids') and not kwargs.get('endpoint_subnet_id'):
         raise click.UsageError(
             'Cannot specify --endpoint-nsg-ids without --endpoint-subnet-id'
@@ -173,7 +217,7 @@ def create_cluster(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.create_node_pool,
-                                             params_to_exclude=['node_config_details'], copy_from_json=False)
+                                             params_to_exclude=['node_config_details', 'node_eviction_node_pool_settings'], copy_from_json=False)
 @containerengine_cli.node_pool_group.command(name=cli_util.override('create_node_pool.command_name', 'create'),
                                              help="""Create a new node pool.""")
 @cli_util.option('--node-image-id', help="""The OCID of the image used to launch the node. This is a shortcut for specifying an image id via the --node-source-details complex JSON parameter. If this parameter is provided, you cannot provide the --node-source-details parameter""")
@@ -182,19 +226,34 @@ def create_cluster(ctx, **kwargs):
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate nodes for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for the nodes. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for the nodes. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-eviction-node-pool-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Node eviction settings for this nodepool. Example: `{\"evictionGraceDuration\": \"PT30M\", \"isForceDeleteAfterGraceDuration\": \"true\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--max-pods-per-node', type=click.INT, help="""The maximum number of pods that will live on a node of the node pool.""")
+@cli_util.option('--pod-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate pods for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pod-subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place pods for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option(
-    {'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
+    {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+     'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
      'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
      'node-shape-config': {'module': 'container_engine', 'class': 'CreateNodeShapeConfigDetails'},
      'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
      'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'},
-     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+     'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+     'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+     'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
-    input_params_to_complex_types={'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
+    input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+                                   'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
                                    'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
                                    'node-shape-config': {'module': 'container_engine',
@@ -202,11 +261,47 @@ def create_cluster(ctx, **kwargs):
                                    'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
                                    'placement-configs': {'module': 'container_engine',
                                                          'class': 'list[NodePoolPlacementConfigDetails]'},
-                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+                                   'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+                                   'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'},
+                                   'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+                                   'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def create_node_pool(ctx, **kwargs):
+
+    kwargs['node_config_details'] = {}
+
+    if kwargs.get('max_pods_per_node') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --max-pods-per-node without --pod-subnet-ids'
+        )
+
+    if kwargs.get('pod_nsg_ids') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --pod-nsg-ids without --pod-subnet-ids'
+        )
+
+    nodePoolPodNetworkOptionDetails = {}
+    if 'max_pods_per_node' in kwargs and kwargs['max_pods_per_node'] is not None:
+        nodePoolPodNetworkOptionDetails['maxPodsPerNode'] = cli_util.parse_json_parameter("max_pods_per_node", kwargs['max_pods_per_node'])
+    kwargs.pop('max_pods_per_node', None)
+
+    if 'pod_nsg_ids' in kwargs and kwargs['pod_nsg_ids'] is not None:
+        nodePoolPodNetworkOptionDetails['podNsgIds'] = cli_util.parse_json_parameter("pod_nsg_ids", kwargs['pod_nsg_ids'])
+    kwargs.pop('pod_nsg_ids', None)
+
+    # existence of pod_subnet_ids hints that the CNI used is OCI_VCN_IP_NATIVE
+    # with it's absence, we will pass a null nodePoolPodNetworkOptionDetails, which means use default CNI FLANNEL_OVERLAY
+    if 'pod_subnet_ids' in kwargs and kwargs['pod_subnet_ids'] is not None:
+        # if cniType is absent, defaults to FLANNEL
+        nodePoolPodNetworkOptionDetails['cniType'] = "OCI_VCN_IP_NATIVE"
+        nodePoolPodNetworkOptionDetails['podSubnetIds'] = cli_util.parse_json_parameter("pod_subnet_ids", kwargs['pod_subnet_ids'])
+        kwargs['node_config_details']['nodePoolPodNetworkOptionDetails'] = nodePoolPodNetworkOptionDetails
+    kwargs.pop('pod_subnet_ids', None)
+
     if 'size' in kwargs and kwargs['size'] is not None:
-        kwargs['node_config_details'] = {}
         kwargs['node_config_details']['size'] = kwargs['size']
     kwargs.pop('size', None)
 
@@ -215,11 +310,16 @@ def create_node_pool(ctx, **kwargs):
     kwargs.pop('nsg_ids', None)
 
     if 'placement_configs' in kwargs and kwargs['placement_configs'] is not None:
-        if 'node_config_details' not in kwargs:
-            kwargs['node_config_details'] = {}
-        kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
-                                                                                          kwargs['placement_configs'])
+        kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs", kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)
+
+    if 'node_defined_tags' in kwargs and kwargs['node_defined_tags'] is not None:
+        kwargs['node_config_details']['definedTags'] = cli_util.parse_json_parameter("node_defined_tags", kwargs['node_defined_tags'])
+    kwargs.pop('node_defined_tags', None)
+
+    if 'node_freeform_tags' in kwargs and kwargs['node_freeform_tags'] is not None:
+        kwargs['node_config_details']['freeformTags'] = cli_util.parse_json_parameter("node_freeform_tags", kwargs['node_freeform_tags'])
+    kwargs.pop('node_freeform_tags', None)
 
     if kwargs.get('kms_key_id'):
         kwargs['node_config_details']['kmsKeyId'] = kwargs.get('kms_key_id')
@@ -253,37 +353,87 @@ def create_node_pool(ctx, **kwargs):
 
 
 @cli_util.copy_params_from_generated_command(containerengine_cli.update_node_pool,
-                                             params_to_exclude=['node_config_details'], copy_from_json=False)
+                                             params_to_exclude=['node_config_details', 'node_eviction_node_pool_settings'], copy_from_json=False)
 @containerengine_cli.node_pool_group.command(name=cli_util.override('update_node_pool.command_name', 'update'),
                                              help="""Update a node pool.""")
 @cli_util.option('--size', type=click.INT, help="""The number of nodes spread across placement configurations.""")
 @cli_util.option('--nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate nodes for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--placement-configs', type=custom_types.CLI_COMPLEX_TYPE,
                  help="""The placement configurations that determine where the nodes will be placed.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-freeform-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Free-form tags for the nodes. Each tag is a simple key-value pair with no predefined name, type, or namespace. For more information, see [Resource Tags]. Example: `{\"Department\": \"Finance\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-defined-tags', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Defined tags for the nodes. Each key is predefined and scoped to a namespace. For more information, see [Resource Tags]. Example: `{\"Operations\": {\"CostCenter\": \"42\"}}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--node-eviction-node-pool-settings', type=custom_types.CLI_COMPLEX_TYPE, help=u"""Node eviction settings for this nodepool. Example: `{\"evictionGraceDuration\": \"PT30M\", \"isForceDeleteAfterGraceDuration\": \"true\"}`""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @cli_util.option('--kms-key-id', help="""The OCID of the Key Management Service key assigned to the boot volume.""")
 @cli_util.option('--is-pv-encryption-in-transit-enabled', type=click.BOOL, help=u"""Whether to enable in-transit encryption for the data volume's paravirtualized attachment. This field applies to both block volumes and boot volumes. The default value is false.""")
+@cli_util.option('--max-pods-per-node', type=click.INT, help="""The maximum number of pods that will live on a node of the node pool.""")
+@cli_util.option('--pod-nsg-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the Network Security Group(s) to associate pods for this node pool with.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
+@cli_util.option('--pod-subnet-ids', type=custom_types.CLI_COMPLEX_TYPE, help="""The OCIDs of the subnets in which to place pods for this node pool.""" + custom_types.cli_complex_type.COMPLEX_TYPE_HELP)
 @json_skeleton_utils.get_cli_json_input_option(
-    {'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+    {'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+     'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
      'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
      'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
      'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
      'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'},
      'placement-configs': {'module': 'container_engine', 'class': 'list[NodePoolPlacementConfigDetails]'},
-     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+     'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+     'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+     'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+     'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+     'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(
-    input_params_to_complex_types={'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
+    input_params_to_complex_types={'defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+                                   'freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'initial-node-labels': {'module': 'container_engine', 'class': 'list[KeyValue]'},
                                    'subnet-ids': {'module': 'container_engine', 'class': 'list[string]'},
                                    'node-metadata': {'module': 'container_engine', 'class': 'dict(str, string)'},
                                    'node-source-details': {'module': 'container_engine', 'class': 'NodeSourceDetails'},
                                    'node-shape-config': {'module': 'container_engine', 'class': 'UpdateNodeShapeConfigDetails'},
                                    'placement-configs': {'module': 'container_engine',
                                                          'class': 'list[NodePoolPlacementConfigDetails]'},
-                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'}})
+                                   'node-defined-tags': {'module': 'container_engine', 'class': 'dict(str, dict(str, object))'},
+                                   'node-freeform-tags': {'module': 'container_engine', 'class': 'dict(str, string)'},
+                                   'nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'node-eviction-node-pool-settings': {'module': 'container_engine', 'class': 'dict(str, str)'},
+                                   'max-pods-per-node': {'module': 'container_engine', 'class': 'int'},
+                                   'pod-nsg-ids': {'module': 'container_engine', 'class': 'list[string]'},
+                                   'pod-subnet-ids': {'module': 'container_engine', 'class': 'list[string]'}})
 @cli_util.wrap_exceptions
 def update_node_pool(ctx, **kwargs):
+    kwargs['node_config_details'] = {}
+
+    if kwargs.get('max_pods_per_node') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --max-pods-per-node without --pod-subnet-ids'
+        )
+
+    if kwargs.get('pod_nsg_ids') and not kwargs.get('pod_subnet_ids'):
+        raise click.UsageError(
+            'Cannot specify --pod-nsg-ids without --pod-subnet-ids'
+        )
+
+    nodePoolPodNetworkOptionDetails = {}
+    if 'max_pods_per_node' in kwargs and kwargs['max_pods_per_node'] is not None:
+        nodePoolPodNetworkOptionDetails['maxPodsPerNode'] = cli_util.parse_json_parameter("max_pods_per_node", kwargs['max_pods_per_node'])
+    kwargs.pop('max_pods_per_node', None)
+
+    if 'pod_nsg_ids' in kwargs and kwargs['pod_nsg_ids'] is not None:
+        nodePoolPodNetworkOptionDetails['podNsgIds'] = cli_util.parse_json_parameter("pod_nsg_ids", kwargs['pod_nsg_ids'])
+    kwargs.pop('pod_nsg_ids', None)
+
+    # existence of pod_subnet_ids hints that the CNI used is OCI_VCN_IP_NATIVE
+    # with it's absence, we will pass a null nodePoolPodNetworkOptionDetails, which means use default CNI FLANNEL_OVERLAY
+    if 'pod_subnet_ids' in kwargs and kwargs['pod_subnet_ids'] is not None:
+        # if cniType is absent, defaults to FLANNEL
+        nodePoolPodNetworkOptionDetails['cniType'] = "OCI_VCN_IP_NATIVE"
+        nodePoolPodNetworkOptionDetails['podSubnetIds'] = cli_util.parse_json_parameter("pod_subnet_ids", kwargs['pod_subnet_ids'])
+        kwargs['node_config_details']['nodePoolPodNetworkOptionDetails'] = nodePoolPodNetworkOptionDetails
+    kwargs.pop('pod_subnet_ids', None)
+
     if 'size' in kwargs and kwargs['size'] is not None:
-        kwargs['node_config_details'] = {}
         kwargs['node_config_details']['size'] = kwargs['size']
     kwargs.pop('size', None)
 
@@ -297,6 +447,16 @@ def update_node_pool(ctx, **kwargs):
         kwargs['node_config_details']['placementConfigs'] = cli_util.parse_json_parameter("placement_configs",
                                                                                           kwargs['placement_configs'])
     kwargs.pop('placement_configs', None)
+
+    if 'node_defined_tags' in kwargs and kwargs['node_defined_tags'] is not None:
+        kwargs['node_config_details']['definedTags'] = cli_util.parse_json_parameter("node_defined_tags",
+                                                                                     kwargs['node_defined_tags'])
+    kwargs.pop('node_defined_tags', None)
+
+    if 'node_freeform_tags' in kwargs and kwargs['node_freeform_tags'] is not None:
+        kwargs['node_config_details']['freeformTags'] = cli_util.parse_json_parameter("node_freeform_tags",
+                                                                                      kwargs['node_freeform_tags'])
+    kwargs.pop('node_freeform_tags', None)
 
     if kwargs.get('kms_key_id') is not None:
         kwargs['node_config_details']['kmsKeyId'] = kwargs.get('kms_key_id')
@@ -326,7 +486,7 @@ def update_node_pool(ctx, **kwargs):
 @cli_util.option('--file', type=click.Path(), default=DEFAULT_KUBECONFIG_LOCATION, show_default=True,
                  help="The name of the file that will be updated with response data, or '-' to write to STDOUT.")
 @cli_util.option('--token-version', default="2.0.0", help=u"""The version of the kubeconfig token. Supported value is 2.0.0""", type=custom_types.CliCaseInsensitiveChoice(['2.0.0']))
-@cli_util.option('--kube-endpoint', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time. Supported values LEGACY_KUBERNETES, PUBLIC_ENDPOINT, PRIVATE_ENDPOINT""")
+@cli_util.option('--kube-endpoint', type=custom_types.CliCaseInsensitiveChoice(["LEGACY_KUBERNETES", "PUBLIC_ENDPOINT", "PRIVATE_ENDPOINT", "VCN_HOSTNAME"]), help=u"""The endpoint to target. A cluster may have multiple endpoints exposed but the kubeconfig can only target one at a time. Supported values LEGACY_KUBERNETES, PUBLIC_ENDPOINT, PRIVATE_ENDPOINT, VCN_HOSTNAME""")
 @cli_util.option('--overwrite', is_flag=True, help="""Overwrites the contents of kubeconfig file specified using --file\
  option or kubeconfig file at default location if --file is not used.""")
 @click.pass_context

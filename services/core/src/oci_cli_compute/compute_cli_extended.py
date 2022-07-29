@@ -13,6 +13,7 @@ import sys
 from services.core.src.oci_cli_compute.generated import compute_cli
 
 from oci import wait_until
+from oci import exceptions
 from oci.exceptions import ServiceError
 from oci.exceptions import MaximumWaitTimeExceeded
 from oci_cli.cli_root import cli
@@ -201,6 +202,106 @@ def export_image_to_object(ctx, from_json, image_id, if_match, namespace, bucket
         export_image_details['exportFormat'] = export_format
 
     export_image_internal(ctx, image_id, export_image_details, if_match)
+
+
+@cli_util.copy_params_from_generated_command(compute_cli.instance_action, params_to_exclude=['action_type'])
+@compute_cli.instance_group.command(name=cli_util.override('compute.instance_action.command_name', 'instance-action'), help=u"""Performs one of the following power actions on the specified instance:
+
+- **START** - Powers on the instance.
+
+- **STOP** - Powers off the instance.
+
+- **RESET** - Powers off the instance and then powers it back on.
+
+- **SOFTSTOP** - Gracefully shuts down the instance by sending a shutdown command to the operating system. After waiting 15 minutes for the OS to shut down, the instance is powered off. If the applications that run on the instance take more than 15 minutes to shut down, they could be improperly stopped, resulting in data corruption. To avoid this, manually shut down the instance using the commands available in the OS before you softstop the instance.
+
+- **SOFTRESET** - Gracefully reboots the instance by sending a shutdown command to the operating system. After waiting 15 minutes for the OS to shut down, the instance is powered off and then powered back on.
+
+- **SENDDIAGNOSTICINTERRUPT** - For advanced users. **Warning: Sending a diagnostic interrupt to a live system can cause data corruption or system failure.** Sends a diagnostic interrupt that causes the instance's OS to crash and then reboot. Before you send a diagnostic interrupt, you must configure the instance to generate a crash dump file when it crashes. The crash dump captures information about the state of the OS at the time of the crash. After the OS restarts, you can analyze the crash dump to diagnose the issue. For more information, see [Sending a Diagnostic Interrupt].
+
+ - **DIAGNOSTICREBOOT** - Powers off the instance, rebuilds it on the physical host, and then powers it back on. Before you send a diagnostic reboot, restart the instance's OS, confirm that the instance and networking settings are configured correctly, and try other [troubleshooting steps]. Use diagnostic reboot as a final attempt to troubleshoot an unreachable instance. For virtual machine (VM) instances only. For more information, see [Performing a Diagnostic Reboot].
+
+ - **REBOOTMIGRATE** - Powers off the instance, moves it to new hardware, and then powers it back on.
+
+ For more information about managing instance lifecycle states, see [Stopping and Starting an Instance]. \n[Command Reference](instanceAction)""")
+@cli_util.option('--allow-dense-reboot-migration', type=click.BOOL, help=u"""For use with RESET and SOFTRESET actions on instances that use a DenseIO shape, the flag denoting whether [reboot migration] is performed for the instance. The default value is `false`.
+
+If the instance has a date in the Maintenance reboot field and you do nothing (or set this flag to `false`), the instance will be rebuilt at the scheduled maintenance time. The instance will experience 2-6 hours of downtime during the maintenance process. The local NVMe-based SSD will be preserved.
+
+If you want to minimize downtime and can delete the SSD, you can set this flag to `true` and proactively reboot the instance before the scheduled maintenance time. The instance will be reboot migrated to a healthy host and the SSD will be deleted. A short downtime occurs during the migration.
+
+**Caution:** When `true`, the SSD is permanently deleted. We recommend that you create a backup of the SSD before proceeding.""")
+@cli_util.option('--delete-local-storage', type=click.BOOL, help=u"""For bare metal instances that have local storage, this must be set to true to verify that the local storage will be deleted during the migration.  For instances without, this parameter has no effect.""")
+@cli_util.option('--time-scheduled', type=custom_types.CLI_DATETIME, help=u"""If present, this parameter will set (or re-set) the scheduled time that the instance will be reboot migrated in the format defined by [RFC3339].  This will also change the timeRebootMigrationDue field on the instance. If not present, the reboot migration will be triggered immediately.""" + custom_types.CLI_DATETIME.VALID_DATETIME_CLI_HELP_MESSAGE)
+@click.pass_context
+@json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={}, output_type={'module': 'core', 'class': 'Instance'})
+@cli_util.wrap_exceptions
+def instance_action_extended(ctx, from_json, wait_for_state, max_wait_seconds, wait_interval_seconds, instance_id, action, if_match, delete_local_storage, time_scheduled,
+                             allow_dense_reboot_migration):
+
+    if isinstance(instance_id, six.string_types) and len(instance_id.strip()) == 0:
+        raise click.UsageError('Parameter --instance-id cannot be whitespace or empty string')
+    if delete_local_storage is not None and not action.lower() == 'rebootmigrate':
+        raise click.UsageError('Parameter --delete-local-storage is for REBOOTMIGRATE actions only')
+    if time_scheduled is not None and not action.lower() == 'rebootmigrate':
+        raise click.UsageError('Parameter --time-scheduled is for REBOOTMIGRATE actions only')
+    if allow_dense_reboot_migration is not None and not (action.lower() == 'reset' or action.lower() == 'softreset'):
+        raise click.UsageError('Parameter --allow-dense-reboot-migration is for RESET and SOFTRESET actions only')
+
+    _details = None
+    kwargs = {}
+    if if_match is not None:
+        kwargs['if_match'] = if_match
+
+    if action.lower() == 'reset':
+        _details = {'actionType': 'reset'}
+        if allow_dense_reboot_migration is not None:
+            _details['allowDenseRebootMigration'] = allow_dense_reboot_migration
+
+    if action.lower() == 'softreset':
+        _details = {'actionType': 'softreset'}
+        if allow_dense_reboot_migration is not None:
+            _details['allowDenseRebootMigration'] = allow_dense_reboot_migration
+
+    if action.lower() == 'rebootmigrate':
+        _details = {'actionType': 'rebootMigrate'}
+        if delete_local_storage is not None:
+            _details['deleteLocalStorage'] = delete_local_storage
+
+        if time_scheduled is not None:
+            _details['timeScheduled'] = time_scheduled
+
+    client = cli_util.build_client('core', 'compute', ctx)
+    result = client.instance_action(
+        instance_id=instance_id,
+        action=action,
+        instance_power_action_details=_details,
+        **kwargs
+    )
+    if wait_for_state:
+
+        if hasattr(client, 'get_instance') and callable(getattr(client, 'get_instance')):
+            try:
+                wait_period_kwargs = {}
+                if max_wait_seconds is not None:
+                    wait_period_kwargs['max_wait_seconds'] = max_wait_seconds
+                if wait_interval_seconds is not None:
+                    wait_period_kwargs['max_interval_seconds'] = wait_interval_seconds
+
+                click.echo('Action completed. Waiting until the resource has entered state: {}'.format(wait_for_state), file=sys.stderr)
+                result = wait_until(client, client.get_instance(result.data.id), 'lifecycle_state', wait_for_state, **wait_period_kwargs)
+            except exceptions.MaximumWaitTimeExceeded as e:
+                # If we fail, we should show an error, but we should still provide the information to the customer
+                click.echo('Failed to wait until the resource entered the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                sys.exit(2)
+            except Exception:
+                click.echo('Encountered error while waiting for resource to enter the specified state. Outputting last known resource state', file=sys.stderr)
+                cli_util.render_response(result, ctx)
+                raise
+        else:
+            click.echo('Unable to wait for the resource to enter the specified state', file=sys.stderr)
+    cli_util.render_response(result, ctx)
 
 
 @cli_util.copy_params_from_generated_command(compute_cli.export_image, params_to_exclude=['destination_type', 'wait_for_state', 'max_wait_seconds', 'wait_interval_seconds'])

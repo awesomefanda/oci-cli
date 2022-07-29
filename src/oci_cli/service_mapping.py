@@ -3,9 +3,17 @@
 # This software is dual-licensed to you under the Universal Permissive License (UPL) 1.0 as shown at https://oss.oracle.com/licenses/upl or Apache License 2.0 as shown at http://www.apache.org/licenses/LICENSE-2.0. You may choose either license.
 
 service_mapping = {
+    "adm": [
+        "adm",
+        "Application Dependency Management"
+    ],
     "ai": [
         "ai_language",
         "Language"
+    ],
+    "ai-vision": [
+        "ai_vision",
+        "Vision"
     ],
     "analytics": [
         "analytics",
@@ -25,7 +33,7 @@ service_mapping = {
     ],
     "apm-config": [
         "apm_config",
-        "Apm Configuration"
+        "Application Performance Monitoring Configuration"
     ],
     "apm-control-plane": [
         "apm_control_plane",
@@ -37,7 +45,7 @@ service_mapping = {
     ],
     "apm-traces": [
         "apm_traces",
-        "Apm Traces"
+        "Application Performance Monitoring Trace Explorer"
     ],
     "application-migration": [
         "application_migration",
@@ -45,11 +53,11 @@ service_mapping = {
     ],
     "appmgmt-control": [
         "appmgmt_control",
-        "AppMgmt Control"
+        "Resource Discovery and Monitoring Control"
     ],
     "artifacts": [
         "artifacts",
-        "Container Images"
+        "Artifacts and Container Images"
     ],
     "audit": [
         "audit",
@@ -93,7 +101,7 @@ service_mapping = {
     ],
     "cloud-guard": [
         "cloud_guard",
-        "Cloud Guard"
+        "Cloud Guard and Security Zones"
     ],
     "compute": [
         "core",
@@ -103,9 +111,17 @@ service_mapping = {
         "core",
         "Compute Management Service"
     ],
+    "dashboard-service": [
+        "dashboard_service",
+        "Dashboards"
+    ],
     "data-catalog": [
         "data_catalog",
         "Data Catalog"
+    ],
+    "data-connectivity": [
+        "data_connectivity",
+        "Data Connectivity Management"
     ],
     "data-flow": [
         "data_flow",
@@ -159,6 +175,10 @@ service_mapping = {
         "dts",
         "Data Transfer Service"
     ],
+    "em-warehouse": [
+        "em_warehouse",
+        "EmdwControlPlane"
+    ],
     "email": [
         "email",
         "Email Delivery"
@@ -175,9 +195,17 @@ service_mapping = {
         "file_storage",
         "File Storage"
     ],
+    "fusion-apps": [
+        "fusion_apps",
+        "Fusion Applications Environment Management"
+    ],
     "goldengate": [
         "golden_gate",
         "GoldenGate"
+    ],
+    "governance-rules-control-plane": [
+        "governance_rules_control_plane",
+        "GovernanceRulesControlPlane"
     ],
     "health-checks": [
         "healthchecks",
@@ -206,6 +234,10 @@ service_mapping = {
     "lb": [
         "load_balancer",
         "Load Balancing"
+    ],
+    "license-manager": [
+        "license_manager",
+        "License Manager"
     ],
     "limits": [
         "limits",
@@ -239,6 +271,10 @@ service_mapping = {
         "marketplace",
         "Marketplace Service"
     ],
+    "media-services": [
+        "media_services",
+        "Media Services"
+    ],
     "monitoring": [
         "monitoring",
         "Monitoring"
@@ -250,6 +286,10 @@ service_mapping = {
     "network": [
         "core",
         "Networking Service"
+    ],
+    "network-firewall": [
+        "network_firewall",
+        "Network Firewall"
     ],
     "nlb": [
         "network_load_balancer",
@@ -271,9 +311,21 @@ service_mapping = {
         "oda",
         "Digital Assistant Service Instance"
     ],
+    "oma": [
+        "lockbox",
+        "Managed Access"
+    ],
+    "onesubscription": [
+        "onesubscription",
+        "OneSubscription"
+    ],
     "ons": [
         "ons",
         "Notifications"
+    ],
+    "opa": [
+        "opa",
+        "OracleProcessAutomation"
     ],
     "opctl": [
         "operator_access_control",
@@ -301,7 +353,7 @@ service_mapping = {
     ],
     "osp-gateway": [
         "osp_gateway",
-        "Billing Center Gateway"
+        "OSP Gateway"
     ],
     "osub-billing-schedule": [
         "osub_billing_schedule",
@@ -337,7 +389,7 @@ service_mapping = {
     ],
     "secrets": [
         "secrets",
-        "Vault Service Secret Retrieval"
+        "Vault Secret Retrieval"
     ],
     "service-catalog": [
         "service_catalog",
@@ -347,6 +399,18 @@ service_mapping = {
         "service_manager_proxy",
         "Service Manager Proxy"
     ],
+    "service-mesh": [
+        "service_mesh",
+        "Service Mesh"
+    ],
+    "speech": [
+        "ai_speech",
+        "Speech"
+    ],
+    "stack-monitoring": [
+        "stack_monitoring",
+        "Stack Monitoring"
+    ],
     "streaming": [
         "streaming",
         "Streaming"
@@ -355,9 +419,13 @@ service_mapping = {
         "cims",
         "Support Management"
     ],
+    "threat-intelligence": [
+        "threat_intelligence",
+        "Threat Intelligence"
+    ],
     "usage": [
         "usage",
-        "UsageApi"
+        "Usage Proxy"
     ],
     "usage-api": [
         "usage_api",
@@ -365,15 +433,23 @@ service_mapping = {
     ],
     "vault": [
         "vault",
-        "Secrets Management"
+        "Vault Secret Management"
     ],
     "visual-builder": [
         "visual_builder",
         "Visual Builder"
     ],
+    "vn-monitoring": [
+        "vn_monitoring",
+        "Network Monitoring"
+    ],
     "vulnerability-scanning": [
         "vulnerability_scanning",
         "Scanning"
+    ],
+    "waa": [
+        "waa",
+        "Web Application Acceleration (WAA)"
     ],
     "waas": [
         "waas",

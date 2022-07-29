@@ -13,8 +13,10 @@ from oci_cli import json_skeleton_utils
 from oci_cli import custom_types  # noqa: F401
 from services.rover.src.constants import ROVER_WORKLOAD_TYPE_IMAGE
 from services.rover.src.oci_cli_rover.generated import rover_service_cli
-from services.rover.src.oci_cli_rover.rover_utils import get_compute_image_helper, export_compute_image_helper, \
-    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, modify_image_workload_name
+from services.rover.src.oci_cli_rover.rover_utils import export_compute_image_helper, \
+    prompt_for_secrets, prompt_for_workload_delete, export_compute_image_status_helper, \
+    validate_bucket, validate_get_image, prepare_image_workload_data, prepare_bucket_workload_data, \
+    create_master_key_policy_rover_resource, remove_additional_params_after_policy
 from services.rover.src.oci_cli_rover_node.generated import rovernode_cli
 from oci.util import formatted_flat_dict
 
@@ -129,8 +131,9 @@ def setup_identity_helper(ctx, **kwargs):
     return create_policies_result
 
 
-@cli_util.copy_params_from_generated_command(rovernode_cli.create_rover_node, params_to_exclude=['customer_shipping_address', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
+@cli_util.copy_params_from_generated_command(rovernode_cli.create_rover_node, params_to_exclude=['customer_shipping_address', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.create_rover_node.name, help=rovernode_cli.create_rover_node.help)
+@cli_util.option('--shape', required=True, help=u"""Shape of the node on Rover device""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
 @cli_util.option('--care-of', help=u"""Place/person to direct the package to.""")
 @cli_util.option('--address1', help=u"""Address line 1.""")
@@ -144,6 +147,8 @@ def setup_identity_helper(ctx, **kwargs):
 @cli_util.option('--phone-number', help=u"""Phone number.""")
 @cli_util.option('--email', help=u"""Email address.""")
 @cli_util.option('--setup-identity', help=u"""Creating dynamic group and Assigning Policies for Rover node""", is_flag=True)
+@cli_util.option('--policy-compartment-id', help=u"""Compartment ID where the master key policy (if master key provided) would be created""")
+@cli_util.option('--policy-name', help=u"""Display name for the policy to be created for the master key (if provided)""")
 @click.pass_context
 @json_skeleton_utils.json_skeleton_generation_handler(input_params_to_complex_types={'customer-shipping-address': {'module': 'rover', 'class': 'ShippingAddress'}, 'node-workloads': {'module': 'rover', 'class': 'list[object]'}, 'freeform-tags': {'module': 'rover', 'class': 'dict(str, string)'}, 'defined-tags': {'module': 'rover', 'class': 'dict(str, dict(str, object))'}, 'system-tags': {'module': 'core', 'class': 'dict(str, dict(str, object))'}}, output_type={'module': 'rover', 'class': 'RoverNode'})
 @cli_util.wrap_exceptions
@@ -153,6 +158,7 @@ def create_rover_node_extended(ctx, **kwargs):
     _details = {}
     _details['displayName'] = kwargs['display_name']
     _details['compartmentId'] = kwargs['compartment_id']
+    _details['shape'] = kwargs['shape']
 
     if kwargs['customer_shipping_address'] is not None:
         _details['customerShippingAddress'] = cli_util.parse_json_parameter("customer_shipping_address", kwargs['customer_shipping_address'])
@@ -192,6 +198,15 @@ def create_rover_node_extended(ctx, **kwargs):
 
     if kwargs['system_tags'] is not None:
         _details['systemTags'] = cli_util.parse_json_parameter("system_tags", kwargs['system_tags'])
+
+    # set up policy for master key if provided
+    if kwargs['master_key_id']:
+        create_master_key_policy_rover_resource("node", ctx, **kwargs)
+        _details['masterKeyId'] = kwargs['master_key_id']
+    elif kwargs['policy_name'] or kwargs['policy_compartment_id']:
+        raise click.UsageError('policy-compartment-id or policy-name cannot be provided without master-key-id')
+    # Remove additional parameters of policy from kwargs
+    kwargs = remove_additional_params_after_policy(**kwargs)
 
     # creating rover node
 
@@ -258,7 +273,7 @@ def show_rover_node_extended(ctx, **kwargs):
     cli_util.render_response(result, ctx)
 
 
-@cli_util.copy_params_from_generated_command(rovernode_cli.update_rover_node, params_to_exclude=['customer_shipping_address', 'rover_node_id', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
+@cli_util.copy_params_from_generated_command(rovernode_cli.update_rover_node, params_to_exclude=['customer_shipping_address', 'data_validation_code', 'import_compartment_id', 'import_file_bucket', 'is_import_requested', 'rover_node_id', 'node_workloads', 'public_key', 'serial_number', 'super_user_password', 'unlock_passphrase', 'oracle_shipping_tracking_url', 'shipping_vendor', 'time_pickup_expected'])
 @rovernode_cli.rover_node_group.command(name=rovernode_cli.update_rover_node.name, help=rovernode_cli.update_rover_node.help)
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
 @cli_util.option('--addressee', help=u"""Company or person to send the appliance to""")
@@ -278,10 +293,13 @@ def show_rover_node_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def update_rover_node_extended(ctx, **kwargs):
 
-    client = cli_util.build_client('rover', 'rover_node', ctx)
+    cli_util.build_client('rover', 'rover_node', ctx)
 
     kwargs = complex_shipping_address_param(**kwargs)
-    kwargs['lifecycle_state_details'] = "PENDING_SUBMISSION"
+    if not kwargs['lifecycle_state_details']:
+        pending_lifecycle_state = "PENDING_SUBMISSION"
+        click.echo("WARNING:Rover node will be updated with lifecycle state details " + pending_lifecycle_state)
+        kwargs['lifecycle_state_details'] = pending_lifecycle_state
     kwargs.update({
         'rover_node_id': kwargs['node_id']
     })
@@ -328,10 +346,8 @@ def delete_rover_node_extended(ctx, **kwargs):
 
 @rovernode_cli.rover_node_group.command(name="add-workload", help=u"""Add workload information to Rover Node""")
 @cli_util.option('--node-id', required=True, help=u"""Unique RoverNode identifier""")
-@cli_util.option('--compartment-id', required=True, help=u"""Compartment Id of Bucket""")
 @cli_util.option('--type', required=True, type=custom_types.CliCaseInsensitiveChoice(["BUCKET", "IMAGE"]), help=u"""Type of workload""")
 @cli_util.option('--image-id', help=u"""Object Store Image OCID for the workload""")
-@cli_util.option('--bucket-id', help=u"""Object Store Bucket OCID for the workload""")
 @cli_util.option('--bucket-name', help=u"""Object Store Bucket name for the workload""")
 @cli_util.option('--prefix', help=u"""List of objects with names matching this prefix would be part of this export job.""")
 @cli_util.option('--range-start', help=u"""Object names returned by a list query must be greater or equal to this parameter.""")
@@ -344,39 +360,27 @@ def delete_rover_node_extended(ctx, **kwargs):
 @cli_util.wrap_exceptions
 def add_workload(ctx, **kwargs):
 
-    workload_data = image_id = workload_id = compute_obj = destination_uri = None
+    workload_data = image_id = workload_id = destination_uri = None
     result = get_rover_node_helper(ctx, kwargs['node_id'])
 
     if kwargs['type'].lower() == "bucket":
-        if not ('bucket_id' in kwargs and kwargs['bucket_id']) or not ('bucket_name' in kwargs and kwargs['bucket_name']):
-            raise click.UsageError('Parameter bucket-id and bucket-name cannot be whitespace or empty string')
-        workload_id = kwargs['bucket_id']
-        workload_data = [{
-            "workloadType": "BUCKET", "id": kwargs['bucket_id'], "name": kwargs['bucket_name'], "compartmentId": kwargs['compartment_id'],
-            'prefix': kwargs['prefix'], 'rangeStart': kwargs['range_start'], 'rangeEnd': kwargs['range_end']
-        }]
+        result_bucket = validate_bucket(ctx, **kwargs)
+
+        workload_id = result_bucket.data.name
+        workload_data = prepare_bucket_workload_data(result_bucket, **kwargs)
 
     elif kwargs['type'].lower() == "image":
-        if 'image_id' in kwargs and not kwargs['image_id']:
-            raise click.UsageError('Parameter image-id cannot be whitespace or empty string')
+        compute_image_obj = validate_get_image(ctx, **kwargs)
         workload_id = image_id = kwargs['image_id']
-        compute_image_obj = get_compute_image_helper(ctx, image_id)
-        compute_image_obj_name = modify_image_workload_name(compute_image_obj.data.display_name)
-        destination_uri = result.data.image_export_par + compute_image_obj_name + "_" + image_id + ".oci"
-        workload_data = [
-            {'workloadType': "IMAGE", 'id': image_id, 'name': compute_image_obj_name,
-             'size': compute_image_obj.data.size_in_mbs, 'compartmentId': kwargs['compartment_id'],
-             }
-        ]
+        workload_data = prepare_image_workload_data(compute_image_obj, image_id)
+        destination_uri = result.data.image_export_par + workload_data[0]['name'] + "_" + image_id + ".oci"
     confirm_prompt = "Would you like to submit the following workload information ? " + formatted_flat_dict(workload_data)
-    if result.data.node_workloads:
-        if any(existing_workload.id == workload_id for existing_workload in result.data.node_workloads):
-            raise click.UsageError("Workload with {} is already attached".format(workload_id))
+    if result.data.node_workloads and len(result.data.node_workloads) > 0 and any(existing_workload.id == workload_id for existing_workload in result.data.node_workloads):
+        raise click.UsageError("Workload with {} is already attached".format(workload_id))
 
-    if not kwargs['force']:
-        if not click.confirm(click.style(confirm_prompt, fg="yellow")):
-            click.echo("Aborting workload selection for Rover Cluster")
-            ctx.abort()
+    if not kwargs['force'] and not click.confirm(click.style(confirm_prompt, fg="yellow")):
+        click.echo("Aborting workload selection for Rover Cluster")
+        ctx.abort()
 
     if kwargs['type'].lower() == "image":
         export_return_response = export_compute_image_helper(ctx, image_id, destination_uri)

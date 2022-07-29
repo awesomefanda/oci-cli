@@ -6,6 +6,1139 @@ All notable changes to this project will be documented in this file.
 
 The format is based on `Keep a Changelog <http://keepachangelog.com/>`__.
 
+3.12.0 - 2022-07-26
+--------------------
+Added
+~~~~~
+* [BREAKING]  Support for the Fusion Apps as a Service
+
+ * ``oci fusion-apps``
+
+* Support for specifying size preference when requesting a Data Transfer Appliance in the Data Transfer Service
+
+  * ``oci dts appliance request --minimum-storage-capacity-in-terabytes``
+
+* Support for listing all boot volume and replicas within a volume group replica in Boot-volume service
+
+  * ``oci bv boot-volume list --volume-group-id``
+  * ``oci bv boot-volume-replica list --volume-group-replica-id``
+
+* ``Big data service``
+
+    * Added support for encryption of boot and block volumes associated with the cluster using customer specified kmsKeyId
+
+       * ``oci bds instance create --kms-key-id``
+       * ``oci bds instance update --kms-key-id``
+
+    * Added support for VM.Standard.E4.Flex shape for Cloud SQL (CSQL) node
+
+       * ``oci bds cloudsql add --shape-config``
+
+* Support for Autonomous Database Dedicated on ExaCS in Operator Access Control Service
+
+  * ``oci opctl operator-control create --resource-type``
+  * ``oci opctl operator-control-assignment create --resource-type``
+
+* Support for new parameter in management-agent service
+
+      * ``oci management-agent work-request list --type``
+      * ``oci management-agent plugin list --agent-id``
+      * ``oci management-agent agent list --access-level --compartment-id-in-subtree``
+
+* Support for viewing Automatic Workload Repository (AWR) data for databases added to AWRHub in Operations Insights service
+
+  * ``oci opsi awr-hubs *``
+
+* Support for Monthly Security Maintenance with subtype "SECURITY_MONTHLY" in Database service
+
+  * ``oci db maintenance-run list --maintenance-subtype SECURITY_MONTHLY``
+
+* Support for new fields to enable/modify database management in Database service
+
+  * ``oci db database modify-database-management --port --protocol --role --ssl-secret-id``
+
+* Support for runtime configuration in notebook session in Data-science service
+
+  * ``oci data-science notebook-session create --runtime-config-details``
+  * ``oci data-science notebook-session update --runtime-config-details``
+
+* Support for following command in Media service
+
+  * ``oci media-services media-stream``
+
+Fixed
+~~~~~~~
+* Fixed "wait-for-state" for oci db autonomous-database delete
+
+  * ``oci db autonomous-database delete --wait-for-state``
+
+3.11.1 - 2022-07-19
+--------------------
+Added
+~~~~~
+* Support for 2 new global parameters to provide connection and read timeout value
+
+  * ``oci --connection-timeout --read-timeout``
+  
+* Support for Container Databases (CDBs) and Pluggable Databases (PDBs) discovery in the Stack Monitoring service
+
+  * ``oci stack-monitoring discovery-job create --compartment-id --discovery-details``
+  
+* Support for the Fusion Apps service 
+
+  * ``oci fusion-apps``
+
+* Support for the Oracle Process Automation service
+
+  * ``oci opa``
+
+* Support for ingress routing tables to NAT Gateway and Internet Gateway in the VCN Routing service
+
+  * ``oci network nat-gateway create --route-table-id``
+  * ``oci network nat-gateway update --route-table-id`` 
+  * ``oci network internet-gateway create --route-table-id``
+  * ``oci network internet-gateway update --route-table-id``
+  
+* Support for maintenance reboot due date extension on Virtual Machine instances in the core service
+
+  * ``oci compute instance-maintenance-reboot get``
+  * ``oci compute instance update --time-maintenance-reboot-due``
+  
+* Support for Oracle Managed Access service
+  
+  * ``oci oma``
+  
+* Support for grapePeriod for wallet rotation feature in the Autonomous Database service
+
+  * ``oci db autonomous-database-wallet rotate --grace-period``
+  * ``oci db autonomous-database-wallet rotate-regional-wallet --grace-period`` 
+  
+* Support for the Media service
+
+  * ``oci media-services``
+  
+Changed
+~~~~~~~
+* Modified supported version for the following package: cryptography (>=3.2.1, <=37.0.2), pyOpenSSL (>=17.5.0, <=22.0.0)
+
+3.11.0 - 2022-07-12
+--------------------
+Added
+~~~~~
+* Support to provide database management private endpoint ID as input to enable DBCS databases in the Operations Insights service
+
+  * ``oci opsi database-insights create-pe-comanged-database --dbm-private-endpoint-id``
+
+* Support for the below new fields to create data guard association with new db system in the Database service
+
+  * ``oci db data-guard-association create with-new-db-system --database-defined-tags --database-freeform-tags --db-system-defined-tags --db-system-freeform-tags --fault-domains --license-model --node-count --private-ip --time-zone``
+
+* Support for Native Pod Networking in Oracle Kubernetes Engine service
+
+  * ``oci ce cluster create --cluster-pod-network-options``
+  * ``oci ce node-pool create --max-pods-per-node --pod-nsg-ids --pod-subnet-ids``
+  * ``oci ce node-pool update --max-pods-per-node --pod-nsg-ids --pod-subnet-ids``
+
+* Support for Compute Instance Maintenance in the Compute service
+
+  * ``oci compute instance action --action rebootmigrate``
+
+* Support Point-in-time Recovery for non-HA MySQL Database service
+
+  * oci mysql db-system create ... --backup-policy='{"pitr-policy": {"isEnabled": true | false}}'
+
+  * oci mysql db-system create ... --source='{"sourceType": "PITR", "dbSystemId": "$DBSYSTEM_ID", "recoveryPoint": "$RECOVERY_POINT"}'
+
+Changed
+~~~~~~~
+* [BREAKING] The confusing flag naming for preserving data volumes created on instance launch --preserve-data-volumes is removed in the compute service
+
+  * ``oci compute instance terminate --preserve-data-volumes``
+
+* Bug fixes and improvements to project_o
+
+3.10.5 - 2022-06-28
+--------------------
+Added
+~~~~~
+* Support for the Network Monitoring service
+
+  * ``oci vn-monitoring``
+
+* Support for EmWarehouse Service
+
+  * ``oci em-warehouse``
+
+* Support for specifying application scan settings when creating or updating host scan recipes in the Vulnerability Scanning service
+
+  * ``oci vulnerability-scanning host scan recipe create --application-settings``
+  * ``oci vulnerability-scanning host scan recipe update --application-settings``
+
+* Support for shared infrastructure autonomous database character sets in the Database service
+
+  * ``oci db autonomous-database-character-sets list``
+
+* Support for safe-deleting nodes in the Container Engine for Kubernetes service
+
+  * ``oci ce node-pool create --is-force-deletion-after-override-grace-duration-query-param``
+  * ``oci ce node-pool update --is-force-deletion-after-override-grace-duration-query-param``
+  * ``oci ce node-pool delete --is-force-deletion-after-override-grace-duration-query-param``
+  * ``oci ce node-pool delete-node --is-force-deletion-after-override-grace-duration-query-param``
+
+Changed
+~~~~~~~~
+* Support for ``ncharacter-set`` and ``ncharacter-set`` in Autonomous database service
+
+  * ``oci db autonomous-database create --character-set "AL32UTF8" --ncharacter-set "AL16UTF16"``
+
+3.10.4 - 2022-06-21
+--------------------
+Added
+~~~~~
+* Support for the Network Firewall service
+
+  * ``oci network-firewall``
+  
+* Support for CSV file type datasets for text labeling and JSONL in the Data Labeling service
+
+  * ``oci data-labeling-service dataset create-dataset-text-dataset-format-details --dataset-format-details-text-file-type-metadata``
+
+* Support for diagnostics in the Database Management service
+
+  * ``oci database-management diagnosability``
+  * ``oci database-management sql-tuning-task``
+
+Fixed
+~~~~~~~
+* Fixed following command/operations input, output filenames and path for windows OS in object storage service
+
+  * ``oci os object sync``
+
+* Fixed pagination bug in list database service
+
+  * ``oci db database list``
+
+3.10.3 - 2022-06-14
+--------------------
+Added
+~~~~~
+
+* Support for clearing commands history with 'F7' in interactive mode
+  
+  * ``oci -i``
+
+* Support for the Web Application Acceleration (WAA) service
+
+  * ``oci waa``
+
+* Support for the Governance Rules service
+
+  * ``oci governance-rules-control-plane governance-rule``
+
+* Support for the OneSubscription service
+
+  * ``oci onesubscription``
+
+* Support for quota resource locking in the Limits service
+
+  * ``oci limits quota addlock``
+  * ``oci limits quota removelock``
+  * ``oci limits quota create --locks``
+  * ``oci limits quota delete --is-lock-override``
+
+* Support for ``--wait-for-state`` for following command in the MySQL Database service
+
+  * ``oci mysql backup update``
+
+* Support for time zone in Cloud Autonomous VM (CAVM) clusters in the Database service
+
+  * ``oci db cloud-autonomous-vm-cluster create --cluster-time-zone``
+
+* Support for configuration options in the Application Performance Monitoring service
+
+  * ``oci apm-config config create-options``
+
+* Support for MySQL connections in the Database Tools service
+
+  * ``oci dbtools connection``
+
+* Support for resource locking in the Identity service
+
+  * ``oci iam tag-namespace add --tag-namespace-id $tag_namespace_id --type $lock_type``
+  * ``oci iam tag-namespace remove --tag-namespace-id $tag_namespace_id --type $lock_type``
+  * ``oci iam tag-default add --tag-default-id $tag_default_id --type $lock_type``
+  * ``oci iam tag-default remove --tag-default-id $tag_default_id --type $lock_type``
+
+Fixed
+~~~~~~~
+* Fixed bugs in the following commands in Rover service
+
+  * ``oci rover node add-workload``
+  * ``oci rover node create``
+
+
+3.10.2 - 2022-06-07
+--------------------
+Added
+~~~~~
+* Support for private endpoint in the Resource Manager service
+
+  * ``oci resource-manager private-endpoint``
+  
+* Support for generated downloading terraform plan output in json or binary format in the Resource Manager service
+
+  * ``oci resource-manager job get-job-tf-plan`` 
+  
+* Support for query OPSI Data Objects
+
+  * ``oci opsi opsi-data-objects``
+
+Changed
+~~~~~~~
+* Modified supported version for the following package: prompt-toolkit (==3.0.29)
+
+Fixed
+~~~~~~~
+* Bug fix for --arguments property to be able to correctly convert string to json in dataflow service
+
+  * ``oci data-flow run create --arguments``
+
+* Bug in --wait-for-state param for following commands in the Key management system service
+
+  * ``oci kms management key-version create``
+  * ``oci kms management key-version cancel-key-version-deletion``
+  * ``oci kms management key-version schedule-key-version-deletion``
+
+
+3.10.1 - 2022-05-31
+--------------------
+Added
+~~~~~
+* Support for in-depth monitoring, diagnostics capabilities, and advanced management functionality for on-premise Oracle databases in the Database Management service
+
+  * ``oci database-management fleet-health-metrics``
+  * ``oci database-management summary-metrics``
+  * ``oci database-management managed-database list-users``
+
+* Support for using Oracle Cloud Agent to perform iSCSI login and logout for non-multipath-enabled iSCSI attachments in the Container Engine for Kubernetes service
+
+  * ``oci compute volume-attachment attach-iscsi-volume --is-agent-auto-iscsi-login-enabled``
+
+* Kubernetes service
+
+  * Support for Fault Domain placement in the Container Engine
+
+    * ``oci ce node-pool create --placement-configs``
+    * ``oci ce node-pool update --placement-configs``
+
+  * Support for worker node images in the Container Engine
+
+    * ``oci ce node-pool create --kubernetes-version``
+
+* Support for flexible shapes using the ``--driver-shape-config``  and ``--executor-shape-config`` properties in the Data Flow service
+
+  * ``oci data-flow run create``
+  * ``oci data-flow application create``
+  * ``oci data-flow application update``
+  * ``oci data-flow run create``
+  * ``oci data-flow run submit``
+
+3.10.0 - 2022-05-24
+------------------
+Added
+~~~~~
+
+* Support for License Manager Service
+
+  * ``oci license-manager``
+
+* Support the use of compute capacity reservation in OCVS SDDCs in the Oracle Cloud VMware Solution service
+
+  * ``oci ocvs esxi-host create --capacity-reservation-id``
+  * ``oci ocvs sddc create --capacity-reservation-id``
+
+* Oracle Digital Assistant service
+
+  * Support for Packaged skill management APIs
+
+    * ``oci oda odapackage``
+
+  * Support for Role-based access on instance creation
+
+    * ``oci oda oda-instance create --is-role-based-access``
+
+  * Support for assigned ownership (attachment) APIs
+
+    * ``oci oda oda-instance-attachment``
+
+  * Support for instance metadata management APIs
+
+    * ``oci oda management``
+
+* Support for Usage Plans in the API Gateway service
+
+  * ``oci api-gateway usage-plan``
+  * ``oci api-gateway subscriber``
+
+* Support for Oracle Linux 8 Application Streams in the OS Management Service
+
+  * ``oci os-management managed-instance disable-module-stream``
+  * ``oci os-management managed-instance enable-module-stream``
+  * ``oci os-management managed-instance install-module-profile``
+  * ``oci os-management managed-instance list-module-profiles``
+  * ``oci os-management managed-instance list-module-streams``
+  * ``oci os-management managed-instance remove-module-profile``
+  * ``oci os-management managed-instance switch-module-stream``
+  * ``oci os-management module-profile``
+  * ``oci os-management module-stream``
+
+Changed
+~~~~~~~
+* Improved service error exception for all CLI commands
+
+* [BREAKING] The parameter --specification is now required in the below command
+
+  * ``oci api-gateway deployment create --specification``
+
+* [BREAKING] The command below is deleted in the OS Management Service
+
+  * ``oci os-management work-request-summary``
+
+3.9.1 - 2022-05-17
+------------------
+Added
+~~~~~
+* Support for Interactive mode for all services
+
+  * ``oci -i``
+
+* Support for the following features in the DevOps service
+
+  * Application Dependency Management service scan results in response to ``oci devops build-run get``
+
+  * Build resources to use Bitbucket Cloud repositories for source code
+  
+    * ``oci devops connection create-bitbucket-cloud-connection``
+    * ``oci devops connection update-bitbucket-cloud-connection``
+    * ``oci devops trigger create-bitbucket-cloud-trigger``
+    * ``oci devops trigger update-bitbucket-cloud-trigger``
+
+  * Helm charts and repositories on deployments 
+     
+    * ``oci devops deploy-artifact create-helm-repository-artifact``
+    * ``oci devops deploy-artifact update-helm-repository-artifact``
+    * ``oci devops deploy-stage create-oke-helm-chart-stage``
+    * ``oci devops deploy-stage update-oke-helm-chart-stage``
+
+* Support for the following features in the Database service
+
+  * CharacterSet and nCharacterSet selection on autonomous dedicated databases. If not specified, the databases are created with default characterSets.
+
+    * ``oci db autonomous-database create --character-set, --ncharacter-set``
+    * ``oci db autonomous-database create-from-backup-id --character-set, --ncharacter-set``
+    * ``oci db autonomous-database create-refreshable-clone --character-set, --ncharacter-set``
+
+  * Support for listing autonomous dedicated database supported character sets
+    
+    * ``oci db autonomous-database-character-sets list`` 
+
+  * Support for AMD E4 flex shapes on virtual machine database systems
+
+    * ``oci db compute-performance list``
+    * ``oci db storage-performance list``    
+
+* Support for information requests in the Operator Access Control service
+
+  * ``oci opctl access-request list-interactions``
+  * ``oci opctl access-request interaction-request``
+
+
+Changed
+~~~~~~~~
+* Support for terraform and improvements for cross-region ADGs in the Database service
+
+  * Changes to the response fields for ``oci db autonomous-database get`` 
+
+    * Deprecated: ``isDataGuardEnabled``, ``standbyDb``
+    * ``isLocalDataGuardEnabled`` Indicates whether the Autonomous Database has local (in-region) Data Guard enabled.
+    * ``isRemoteDataGuardEnabled`` Indicates whether the Autonomous Database has Cross Region Data Guard enabled.
+    * ``localStandbyDb`` Autonomous Data Guard standby database details.
+
+  * Changes to the response fields for ``oci db autonomous-database update``
+
+    * Deprecated: ``isDataGuardEnabled``
+    * ``isLocalDataGuardEnabled`` Indicates whether the Autonomous Database has local (in-region) Data Guard enabled.
+
+  * ``oci db autonomous-database create-adb-cross-region-data-guard-details``
+
+    * ``--db-name`` is not a required parameter
+
+  * ``oci db autonomous-database delete``
+
+    * Can now be used to delete a standby instance for Cross Region Data Guard.
+
+Fixed
+~~~~~~~
+
+* Bug for KeyError while running ``oci session export``
+
+3.9.0 - 2022-05-10
+------------------
+Added
+~~~~~
+
+* Data Integration service
+
+  * Support for BIP connection in the following commands
+
+    * ``oci data-integration connection create-connection-create-connection-from-bip``
+    * ``oci data-integration connection-validation create-connection-validation-create-connection-from-bip``
+
+  * New parameters --conditional-composite-field-map, --is-single-load and --parallel-load-limit for the below commands
+
+    * ``oci data-integration task create-data-loader-task --conditional-composite-field-map --is-single-load --parallel-load-limit``
+    * ``oci data-integration task update-data-loader-task --conditional-composite-field-map --is-single-load --parallel-load-limit``
+
+
+Changed
+~~~~~~~
+* Rover service
+
+  * [BREAKING] Parameters --compartment-id and --bucket-id for add-workload operations for node and cluster are being deleted
+
+    * ``oci rover node add-workload``
+    * ``oci rover standalone-cluster add-workload``
+    * ``oci rover station-cluster add-workload``
+
+
+3.8.1 - 2022-05-03
+------------------
+Added
+~~~~~
+* Support for Application Dependency Management service
+
+  * ``oci adm``
+
+* Support for provisioned concurrency in the Functions service
+
+  * ``oci fn function create --provisioned-concurrency``
+  * ``oci fn function update --provisioned-concurrency``
+
+* Support for allow reboot migration for DenseIO shape in maintenance situations in Compute service
+
+  * ``oci compute instance instance-action-reset-action-details``
+  * ``oci compute instance instance-action-soft-reset-action-details``
+
+3.8.0 - 2022-04-26
+------------------
+Added
+~~~~~
+* Support for the Service Mesh service
+
+  * ``oci service-mesh``
+
+* Big Data service
+
+  * Support for compute only worker nodes
+
+    * ``oci bds instance remove  --node-id``
+    * ``oci bds instance remove  --node-id --is-force-remove-enabled``
+
+  * Support for horizontal autoscaling policy
+
+    * ``oci bds auto-scale-config create --policy-details``
+    * ``oci bds auto-scale-config edit --policy-details``
+
+  * Support for bootstrap script
+
+    * ``oci bds instance create --bootstrap-script-url``
+    * ``oci bds instance update --bootstrap-script-url``
+
+  * Support for customizable kerberos realm name
+
+    * ``oci bds instance create --kerberos-realm-name``
+
+  * Support for ODH patch patch management
+
+    * ``oci bds instance install-patch``
+    * ``oci bds instance list-patch-histories``
+    * ``oci bds instance list-patches``
+
+* Rover service
+
+  * [BREAKING] Support for required shape parameter to the creation of a roving edge node
+
+    * ``oci rover node create --shape``
+
+  * Support to list the available shapes for Rover
+
+    * ``oci rover shape list --compartment-id``
+
+  * Support the option for the user to provide their own master key OCID to encrypt secret data to roving edge nodes, standalone clusters and station clusters.
+
+    * ``oci rover node create --master-key-id --policy-compartment-id --policy-name``
+    * ``oci rover standalone-cluster --master-key-id --policy-compartment-id --policy-name``
+    * ``oci rover station-cluster --master-key-id``
+
+  * Support to create the master key policy with required parameter master-key-id and optional parameters policy-compartment-id and policy-name
+
+    * ``oci rover create-master-key-policy --master-key-id --policy-compartment-id --policy-name``
+
+* APM Synthetics service
+
+  * Support for create/update/delete of dedicated-vantage-points
+
+    * ``oci apm-synthetics dedicated-vantage-point``
+
+  * Support for list of dedicated-vantage-points
+
+    * ``oci apm-synthetics dedicated-vantage-point-collection list-dedicated-vantage-points``
+
+* Support for Additional Transcription Format (SRT) and Punctuation in the Speech service
+
+  * ``oci speech transcription-job create --additional-transcription-formats``
+
+* Support for cost management schedule in the Usage service
+
+  * ``oci usage-api schedule``
+  * ``oci usage-api scheduled-run``
+
+* Support for Security Zone in the Cloud Guard service
+
+  * ``oci cloud-guard security-zone``
+  * ``oci cloud-guard security-policy``
+
+* Support for creating budgets that target subscriptions and child tenancies
+
+  * ``oci budgets budget create --processing-period-type``
+
+* Support for Virtual Test Access Point (VTAP) feature as a part of the vcn service
+
+  * ``oci network vtap``
+  * ``oci network capture-filter``
+
+* Support to reactive child tenancy in the Organizations service
+
+  * ``oci organizations organization-tenancy restore --organization-tenancy-id``
+
+
+Fixed
+~~~~~~~
+* Bug in --wait-for-state param for following commands in the Database service
+
+  * ``oci db data-guard-association switchover``
+  * ``oci db data-guard-association failover``
+  * ``oci db data-guard-association reinstate``
+
+Changed
+~~~~~~~
+* [BREAKING] --subscription-id is now required in the below command in the Organization service
+
+  * ``oci organizations subscription-mapping list --subscription-id``
+
+3.7.3 - 2022-04-19
+------------------
+Added
+~~~~~
+
+* Support for choosing compute shapes when creating SDDCs and ESXi hosts in the VMWare Solution service
+
+  * ``oci ocvs esxi-host create --host-ocpu-count, --host-shape-name``
+  * ``oci ocvs sddc create --initial-host-ocpu-count, --initial-host-shape-name``
+
+* Database service
+
+    * Support for stack monitoring on external databases
+
+      * ``oci db external-cdb disable-external-container-database-stack-monitoring``
+      * ``oci db external-cdb enable-external-container-database-stack-monitoring``
+      * ``oci db external-non-cdb disable-external-non-container-database-stack-monitoring``
+      * ``oci db external-non-cdb enable-external-non-container-database-stack-monitoring``
+      * ``oci db external-pdb disable-external-pluggable-database-stack-monitoring``
+      * ``oci db external-pdb enable-external-pluggable-database-stack-monitoring``
+
+    * Support for upgrading VM database systems in place
+
+      * ``oci db system upgrade``
+      * ``oci db db-system-upgrade-history get``
+      * ``oci db db-system-upgrade-history list``
+
+* Support for the Stack Monitoring service
+
+  * ``oci stack-monitoring``
+
+3.7.2 - 2022-04-12
+------------------
+Added
+~~~~~
+
+* Database service
+
+  * Support for enabling and disabling data collection options during create and update operations on VM clusters on Exadata Cloud
+
+    * ``oci db vm-cluster create --data-collection-options ``
+    * ``oci db vm-cluster update --data-collection-options ``
+
+  * Support for new fields --database-edition and --max-cpu-core-count to create and update an autonomous database
+
+    * ``oci db autonomous-database create --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-adb-cross-region-data-guard-details --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-from-backup-id --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-from-backup-timestamp --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-from-clone --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-refreshable-clone --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database create-virtual-clone --database-edition, --max-cpu-core-count``
+    * ``oci db autonomous-database update --database-edition, --max-cpu-core-count``
+
+* Network service
+
+  * Support for using Ipv6 cidr block in the below commands
+
+    * ``oci network byoip-range create --ipv6-cidr-block``
+    * ``oci network subnet create --ipv6-cidr-blocks``
+    * ``oci network subnet update --ipv6-cidr-blocks``
+    * ``oci network subnet add-ipv6-subnet-cidr``
+    * ``oci network subnet remove-ipv6-subnet-cidr``
+    * ``oci network vcn add-ipv6-vcn-cidr``
+    * ``oci network vcn remove-ipv6-vcn-cidr``
+    * ``oci network vnic assign-ipv6 --ipv6-subnet-cidr``
+
+  * Support for the parameters --ipv6-private-cidr-block, --is-oracle-gua-allocation-enabled, --byoipv6-cidr-detail in the below command
+
+    * ``oci network vcn create --byoipv6-cidr-details, --is-oracle-gua-allocation-enabled, --ipv6-private-cidr-blocks``
+
+Changed
+~~~~~
+
+* Parameter --cidr-block has been made optional in the Network service
+
+  * ``oci network byoip-range create --cidr-block``
+
+3.7.1 - 2022-04-05
+------------------
+
+Added
+~~~~~
+
+* Support viewing top process analytics in the Operations Insights service
+
+  * ``oci opsi host-insights summarize-top-processes-usage-trend``
+
+* Support for creating Enterprise Manager-based zLinux host targets for ``--platform-type`` in the Operations Insights service
+
+  * ``oci opsi host-insights list --platform-type``
+
+
+3.7.0 - 2022-03-29
+------------------
+Added
+~~~~~
+
+* Support for --type-key on entities, attributes, and folders in the Data Catalog service
+
+  * ``oci data-catalog attribute create --type-key``
+  * ``oci data-catalog folder create --type-key``
+
+* DevOps service
+
+  * Support for the below commands
+
+    * ``oci devops repository get-repo-file-diff``
+    * ``oci devops repository get-repo-file-lines``
+
+  * Support for blue green and canary stages and single stage redeployment
+
+    * oci devops deploy-stage create-deploy-compute-instance-group-blue-green-stage
+    * oci devops deploy-stage create-compute-instance-group-blue-green-traffic-shift-stage
+    * oci devops deploy-stage create-deploy-compute-instance-group-canary-stage
+    * oci devops deploy-stage create-compute-instance-group-canary-traffic-shift-stage
+    * oci devops deploy-stage create-compute-instance-group-canary-approval-stage
+    * oci devops deployment create-single-stage-redeployment
+    * oci devops deploy-stage update-deploy-compute-instance-group-blue-green-stage
+    * oci devops deploy-stage update-compute-instance-group-blue-green-traffic-shift-stage
+    * oci devops deploy-stage update-deploy-compute-instance-group-canary-stage
+    * oci devops deploy-stage update-compute-instance-group-canary-traffic-shift-stage
+    * oci devops deploy-stage update-compute-instance-group-canary-approval-stage
+    * oci devops deployment update-single-stage-redeployment
+
+  * Support for optional parameter --network-channel to support private oke cluster
+
+    * ``oci devops deploy-environment create-oke-cluster-environment --network-channel``
+    * ``oci devops deploy-environment update-oke-cluster-environment --network-channel``
+
+* Support for new parameters``--bgp-admin-state`` and ``--is-bfd-enabled`` in the Networking service.
+
+  * ``oci network virtual-circuit create --bgp-admin-state --is-bfd-enabled``
+  * ``oci network virtual-circuit update --bgp-admin-state --is-bfd-enabled``
+
+* Java Management service
+
+  * Support for listing and removing of Java Runtime installations
+
+    * ``oci jms installation-site-summary list-installation-sites``
+    * ``oci jms installation-site-summary remove``
+
+  * Support for work request detail status of LCM operation.
+
+    * ``oci jms work-item-summary list-work-items --work-request-id``
+    * ``oci jms work-request cancel --work-request-id``
+
+  * Support for JMS blocklist
+
+    * ``oci jms blocklist create``
+    * ``oci jms blocklist delete``
+    * ``oci jms blocklist list``
+
+  * Support for listing work requests in a fleet.
+
+    * ``oci jms work-request list --fleet-id``
+
+  * Support for Fleets to use custom logs for inventory and operation
+
+    * ``oci jms fleet create --inventory-log --operation-log``
+    * ``oci jms fleet update --inventory-log --operation-log``
+
+Changed
+~~~~~~~~~
+
+* DevOps service
+
+  * [BREAKING] Optional parameter --repository-type has been made required
+
+    * oci devops repository create --repository-type
+
+3.6.2 - 2022-03-22
+------------------
+Added
+~~~~~
+
+* Support for virtual machines, bare metal machines, and Exadata databases with private endpoints in the Operations Insights service
+
+  * ``oci opsi opsi-private-endpoint``
+  * ``oci opsi database-insights change-pe-comanaged-database-detail``
+
+* Support for setting deletion policies on database systems in the MySQL Database service
+
+  * ``oci mysql db-system clone--deletion-policy``
+  * ``oci mysql db-system create --deletion-policy``
+  * ``oci mysql db-system import --deletion-policy``
+  * ``oci mysql db-system update --deletion-policy``
+
+Changed
+~~~~~~~~
+
+* Changed existing database insight operations updated in the Operations Insights service
+
+  * ``oci opsi database-insights create-pe-comanged-database``
+  * ``oci opsi database-insights enable-pe-comanaged-database``
+  * ``oci opsi database-insights update-pe-comanaged-database``
+
+
+3.6.1 - 2022-03-15
+------------------
+Added
+~~~~~
+
+* Support for DI application resource in the Data Integration service
+
+  * ``oci data-integration dis-application``
+
+* Support for enabling shielded instances feature in create SDDC in the Oracle Cloud VMware Solution service
+
+  * ``oci ocvs sddc create --is-shielded-instance-enabled``
+
+* Vulnerability Scanning Service
+
+  * Support for Optional param ``--image-count`` in container scan recipe create and update
+
+    * ``oci vulnerability-scanning container scan recipe create --image-count``
+    * ``oci vulnerability-scanning container scan recipe update --image-count``
+
+  * Support for vulnerabilities list and get
+
+    * ``oci vulnerability-scanning vulnerability get``
+    * ``oci vulnerability-scanning vulnerability list``
+    * ``oci vulnerability-scanning vulnerability list-vulnerability-impacted-containers``
+    * ``oci vulnerability-scanning vulnerability list-vulnerability-impacted-hosts``
+
+* Support for Custom Maintenance Schedule for AVM clusters on ExaCC Infrastructure in the Database service
+
+    * ``oci db autonomous-vm-cluster create --autonomous-data-storage-size-in-tbs, --cpu-core-count-per-node, --maintenance-window-details, --memory-per-oracle-compute-unit-in-gbs, --total-container-databases``
+    * ``oci db autonomous-vm-cluster update --maintenance-window-details``
+
+* Support for the following parameters -defined-tags, --display-name, --freeform-tags for the below commands in the Data Integration service
+
+  * ``oci data-integration application create --defined-tags, --display-name, --freeform-tags``
+  * ``oci data-integration application update --defined-tags, --display-name, --freeform-tags``
+
+Changed
+~~~~~~~
+
+* Complex param --input-ports,--output-port have been updated for below commands in the Data Integration service
+
+  * ``oci data-integration task create-task-from-rest-task --auth-config, --poll-rest-call-config, --typed-expressions``
+  * ``oci data-integration task update-task-from-rest-task --auth-config, --poll-rest-call-config, --typed-expressions``
+
+* Updated the help text for creating an Autonomous Database Data Guard standby to be more descriptive and have better examples
+
+  * ``create-adb-cross-region-data-guard-details``
+
+3.6.0 - 2022-03-08
+------------------
+Added
+~~~~~
+* Support for the Sales Accelerator license option in the Content Management service
+
+  * ``oci oce oce-instance create --add-on-features``
+  * ``oci oce oce-instance update --add-on-features``
+
+* Support for new VCN hostname cluster endpoint as part of Container Engine service
+
+  * ``oci ce cluster create-kubeconfig --kube-endpoint VCN_HOSTNAME``
+
+* Database Migration service
+
+  * Support for reporting all excluded objects based on static exclusion rules and dynamic exclusion settings configured by the Database Migration Service (DMS) user
+
+    * ``oci database-migration excluded-object-summary list``
+
+  * Support to remove, list, and add database objects reported by the Cloud Premigration Advisor Tool (CPAT)
+
+    * ``oci database-migration migration add``
+    * ``oci database-migration migration remove``
+    * ``oci database-migration migration-objects list``
+
+  * Support for migrating Oracle Database from Amazon Web Services (AWS) RDS to Oracle Autonomous Database (ADB) using Amazon Simple Storage Service (Amazon S3) and DBLINK for data transfer
+
+    * ``oci database-migration connection create --db-subtype``
+
+* Enhancement in launch dbsystem as well as create database using customer managed keys for VMBM in the Database service
+
+  * ``oci db system launch --vault-id``
+  * ``oci db database create --vault-id``
+  * ``oci db database migrate-vault-key --vault-id --admin-password --tde-wallet-password``
+
+Changed
+~~~~~~~
+
+* The parameters --admin-username and --admin-password are now optional in the below commands in the MySQL database service
+
+  * ``oci mysql db-system clone``
+  * ``oci mysql db-system create``
+  * ``oci mysql db-system import``
+
+* [BREAKING] The command ``oci rover cluster`` is being deleted and its logic has been divided in to the newly created commands below in the Roving Edge Infrastructure Service
+
+  * ``oci rover station-cluster``
+
+  * ``oci rover standalone-cluster``
+
+3.5.3 - 2022-03-01
+------------------
+Added
+~~~~~
+* Support for managed egress via a default networking option on jobs and notebooks in the Data Science service
+
+  * ``oci data-science``
+
+* Networking service
+
+  * Support for DRG route distribution statements to be specified with a new match type 'MATCH_ALL' for matching criteria
+
+    * ``oci network drg-route-distribution-statement add --statements '[{"matchCriteria":[{"matchType": "MATCH_ALL"}],"action": "ACCEPT","priority": 1}]' --route-distribution-id "id-example"``
+
+  * Support for VCN route types on DRG attachments for deciding whether to import VCN CIDRs or subnet CIDRs into route rules
+
+    * ``oci network drg-attachment create --drg-id "example-drg-id" --network-details '{"type":"VCN","id":"example-vcn-id","vcnRouteType":"VCN_CIDRS"}'``
+
+
+* Database service
+
+  * Support for CPS offline reports in the Database service
+
+    * ``oci db exadata-infrastructure create --is-cps-offline-report-enabled``
+    * ``oci db exadata-infrastructure update --is-cps-offline-report-enabled``
+
+  * Support for infrastructure patching v2 features
+
+    * ``oci db maintenance-run update --current-custom-action-timeout-in-mins, --custom-action-timeout-in-mins, --is-custom-action-timeout-enabled, --is-resume-patching``
+
+  * Support for Autonomous Database Create with Auto Scaling Storage via a new parameter (is-auto-scaling-for-storage-enabled)
+
+    * ``oci db autonomous-database create --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-adb-cross-region-data-guard-details --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-from-backup-id --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-from-backup-timestamp --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-from-clone --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-refreshable-clone --is-auto-scaling-for-storage-enabled``
+    * ``oci db autonomous-database create-virtual-clone --is-auto-scaling-for-storage-enabled``
+
+  * Support for Autonomous Database Update for Auto Scaling Storage via a new parameter (is-auto-scaling-for-storage-enabled)
+
+    * ``oci db autonomous-database update --is-auto-scaling-for-storage-enabled``
+
+  * Support for shrinking an Autonomous Database
+
+    * ``oci db autonomous-database shrink --autonomous-database-id``
+
+Changed
+~~~~~~~
+
+* Upgraded third party module cx_Oracle version to 8.3 to provide support for python 3.8
+
+* Updated docs for ``oci iam db-token get``
+
+3.5.2 - 2022-02-22
+------------------
+Added
+~~~~~
+
+* Support for Speech Service
+
+  * ``oci speech``
+
+* Support for Data Connectivity Management Service
+
+  * ``oci data-connectivity``
+
+* Support for Resource Profile, Sightings, Tactics, and Technique features as a part of the Cloud Guard Service
+
+  * ``oci cloud-guard problem-endpoint-summary list-problem-endpoints``
+  * ``oci cloud-guard resource-risk-score-aggregation request-summarized-trend-resource-risk-scores``
+  * ``oci cloud-guard resource-profile get``
+  * ``oci cloud-guard resource-profile-endpoint-summary list-resource-profile-endpoints``
+  * ``oci cloud-guard resource-profile-impacted-resource-summary list-resource-profile-impacted-resources``
+  * ``oci cloud-guard resource-profile-risk-score-aggregation-summary request-summarized-top-trend-resource-profile-risk-scores``
+  * ``oci cloud-guard resource-profile-summary list-resource-profiles``
+  * ``oci cloud-guard resource-type-summary list-resource-types``
+  * ``oci cloud-guard sighting get``
+  * ``oci cloud-guard sighting-endpoint-summary list-sighting-endpoints``
+  * ``oci cloud-guard sighting-impacted-resource-summary list-sighting-impacted-resources``
+  * ``oci cloud-guard sighting-summary list-sightings``
+  * ``oci cloud-guard tactic-summary list-tactics``
+  * ``oci cloud-guard technique-summary list-techniques``
+
+* Support for disabling crash recovery to improve the performance of large imports in the MySql Database service.
+
+  * ``oci mysql db-system clone --crash-recovery``
+  * ``oci mysql db-system create --crash-recovery``
+  * ``oci mysql db-system import --crash-recovery``
+  * ``oci mysql db-system update --crash-recovery``
+
+* Support for customer managed encryption keys for secrets stored in Analytics service
+
+  * ``oci analytics analytics-instance set-kms-key``
+
+* Support for option --kms-key-id to specify customer managed vault key ocid when creating an instance in the Analytics service
+
+  * ``oci analytics analytics-instance create --kms-key-id``
+
+Fixed
+~~~~~~~
+
+* Bug in the object storage sync in windows which deletes unexpected local subfolders `github issue #502 <https://github.com/oracle/oci-cli/issues/502>`_
+
+3.5.1 - 2022-02-15
+------------------
+Added
+~~~~~
+* Support for the AI Vision service
+
+  * ``oci ai-vision``
+
+* Support for the Threat Intelligence service
+
+  * ``oci threat-intelligence``
+
+* Support for creation of NoSQL database tables with on-demand throughput capacity in the NoSQL Database Cloud service
+
+  * New optional property ``capacityMode`` in ``oci nosql table create --table-limits`` parameter
+
+* Support for trace snapshots in the Application Performance Monitoring service
+
+  * ``oci apm-traces trace aggregated-snapshot get``
+
+* Support for auditing and alerts in the Data Safe service
+
+  * ``oci data-safe alert update``
+
+* Support for data discovery and data masking in the Data Safe service
+
+  * ``oci data-safe alert-policy-rule-collection list-alert-policy-rules``
+  * ``oci data-safe audit-profile discover-audit-trails``
+  * ``oci data-safe audit-profile-collection list-audit-profiles --audit-collected-volume-greater-than-or-equal-to``
+  * ``oci data-safe report-definition generate-report``
+
+* Support for documentation for pagination support in Logging Search service
+
+  * ``oci logging-search search-logs``
+
+* Support for Announcements Subscriptions feature
+
+  * ``oci announce announcement-subscription change-compartment``
+  * ``oci announce announcement-subscription create``
+  * ``oci announce announcement-subscription create-filter-group``
+  * ``oci announce announcement-subscription delete``
+  * ``oci announce announcement-subscription delete-filter-group``
+  * ``oci announce announcement-subscription get``
+  * ``oci announce announcement-subscription list``
+  * ``oci announce announcement-subscription update-filter-group``
+
+3.5.0 - 2022-02-08
+------------------
+Added
+~~~~~
+
+* Support for listing fast launch job configs in the Data Science service
+
+  * ``oci data-science fast-launch-job-config list``
+
+* Support for Subscription endpoints to Upgrade and Manage Payment feature in the OSP Gateway service
+
+  * ``oci osp-gateway subscription-service subscription``
+
+* Support for --is-highly-available for clone and update db-system in the MySQL Database service
+
+  * ``oci mysql db-system clone --is-highly-available``
+  * ``oci mysql db-system update --is-highly-available``
+
+* Support for Storage Management in the Database Management service
+
+  * ``oci database-management tablespace``
+  * ``oci database-management managed-database list-asm-properties``
+
+Changed
+~~~~~
+
+* [BREAKING] the command ``oci osp-gateway invoice`` has been changed to ``oci osp-gateway invoice-service invoice`` in the OSP Gateway service
+
+3.4.5 - 2022-02-01
+------------------
+Added
+~~~~~
+* Support for the Console Dashboard service
+
+  * ``oci dashboard-service dashboard-group``
+  * ``oci dashboard-service dashboard``
+
+* Support for fetching listings by image OCID in the Marketplace service
+
+  * ``oci marketplace listing list --image-id``
+
+* Container Engine for Kubernetes (OKE) Service
+
+    * Support for capacity reservation
+
+      * ``oci ce node-pool create --placement-configs``
+      * ``oci ce node-pool update --placement-configs``
+
+    * Support for Tagging features
+
+      * ``oci ce cluster create --defined-tags, --freeform-tags  --persistent-volume-defined-tags, --persistent-volume-freeform-tags, --service-lb-defined-tags, --service-lb-freeform-tags``
+      * ``oci ce cluster update --defined-tags, --freeform-tags``
+      * ``oci ce node-pool create --defined-tags, --freeform-tags, --node-defined-tags, --node-freeform-tags``
+      * ``oci ce node-pool update --defined-tags, --freeform-tags, --node-defined-tags, --node-freeform-tags``
+
 3.4.4 - 2022-01-25
 ------------------
 Added

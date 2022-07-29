@@ -702,8 +702,26 @@ This token is used to access Oracle cloud databases from database clients.  The 
 
 When running this command inside the Cloud Shell, it will by default use the delegation token for the IAM user to request the db-token. Outside of the cloud shell, this command will default to use the API-key in the default profile in the default OCI configuration.
 
-In order to use a temporary security token, use --auth security-token. Instead of using the default (API-key), this will use the existing valid security token for the user.  If one doesn’t exist, OCI CLI will open a browser window to allow the user to authenticate with IAM""")
-@cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token autonomous databases in one or more compartments.  Example: --scope "urn:oracle:db:all", --scope "urn:oracle:db:......" """)
+In order to use a temporary security token, use --auth security-token. Instead of using the default (API-key), this will use the existing valid security token for the user.  If one doesn’t exist, OCI CLI will open a browser window to allow the user to authenticate with IAM. For more detail, please visit https://docs.oracle.com/en-us/iaas/Content/API/Concepts/sdk_authentication_methods.htm""")
+@cli_util.option('--scope', default='urn:oracle:db::id::*', help=u"""If a scope isn’t provided, the default will be the tenancy scope.  Adding scope allows you to constrain access by the db-token autonomous databases in one or more compartments.
+
+Example scope values:
+
+  urn:oracle:db::id::*
+
+  urn:oracle:db::id::ocid1.tenancy.oc1..xxxx
+
+  urn:oracle:db::id::ocid1.compartment.oc1..xxxx
+
+  urn:oracle:db::id::ocid1.compartment.oc1..xxxx::ocid1.autonomousdatabase.oc1.phx.xxxx
+
+  urn:oracle:db::path::mytenantname
+
+  urn:oracle:db::path::mytenantname:mycompartmentname
+
+  urn:oracle:db::path::mytenantname:mycompartmentname::ocid1.autonomousdatabase.oc1.phx.xxxx
+
+""")
 @cli_util.option('--db-token-location', default=os.path.join(DEFAULT_DIRECTORY, 'db-token'), help=u"""Provide the directory where you would like to store token and private/public key. Default is ~/.oci/db-token""")
 @json_skeleton_utils.get_cli_json_input_option({})
 @cli_util.help_option
@@ -750,7 +768,7 @@ def get_db_token(ctx, from_json, scope, db_token_location):
     with open(db_token_path, "w") as f:
         f.write(response['token'])
         click.echo('db-token written at: {}'.format(db_token_path))
-    cli_setup.apply_user_only_access_permissions(db_token_path)
+    cli_util.apply_user_only_access_permissions(db_token_path)
     with open(db_token_path, 'r') as db_token_file:
         token = db_token_file.read()
 
