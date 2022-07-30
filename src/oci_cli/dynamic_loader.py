@@ -12,14 +12,22 @@ NON_SERVICE_TOP_LEVEL_COMMANDS = ["raw-request", "session", "setup"]
 
 # Add platformization directories to the python system path (PYTHONPATH)
 # This has to be done prior to importing cli_root.
-this_file_path = path.abspath(getsourcefile(lambda: 0))
+if getattr(sys, "frozen", False):
+     # The application is frozen
+     datadir = path.dirname(sys.executable)
+     libdir = path.dirname(datadir)
+     this_file_path = path.join(libdir, 'lib', 'oci_cli', 'dynamic_loader.pyc')
+else:
+    this_file_path = path.abspath(getsourcefile(lambda: 0))
 if "site-packages" in this_file_path or "dist-packages" in this_file_path:
     # If the installation directory starts with oci_cli, we need to find the
     # last occurrence of oci_cli in the path.
     python_cli_root_dir = this_file_path[0:this_file_path.rindex("oci_cli")]
+elif "lib" in this_file_path:
+    python_cli_root_dir = this_file_path[0:this_file_path.index("oci_cli")]
 else:
-    python_cli_root_dir = this_file_path[0:this_file_path.index(path.join('src', 'oci_cli'))]
-sys.path.append(python_cli_root_dir + 'src')
+    python_cli_root_dir = this_file_path[0:this_file_path.index("\src\oci_cli")]
+    sys.path.append(python_cli_root_dir + 'src')
 sys.path.append(python_cli_root_dir)
 services_dir = path.join(python_cli_root_dir, ALL_SERVICES_DIR)
 
