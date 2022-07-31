@@ -15,8 +15,16 @@ NON_SERVICE_TOP_LEVEL_COMMANDS = ["raw-request", "session", "setup"]
 if getattr(sys, "frozen", False):
      # The application is frozen
      datadir = path.dirname(sys.executable)
+     # exe datadir : C:\Users\hkuma\OneDrive\Desktop\PythonCLI\oci-cli\build\exe.win-amd64-3.9
+     # exe dynamic_loader.py C:\Users\hkuma\OneDrive\Desktop\PythonCLI\oci-cli\build\lib\oci_cli
+     # msi datadir : C:\Users\hkuma\AppData\Local\Programs\Oracle\oci-cli
+     # msi dynamic_loader.py datadir C:\Users\hkuma\AppData\Local\Programs\Oracle\oci-cli\Lib\site-packages\oci_cli
+     print("datadir : {}".format(datadir))
      libdir = path.dirname(datadir)
-     this_file_path = path.join(libdir, 'lib', 'oci_cli', 'dynamic_loader.pyc')
+     if "build" in libdir:
+        this_file_path = path.join(libdir, 'lib', 'oci_cli', 'dynamic_loader.py')
+     if "AppData" in datadir:
+        this_file_path = path.join(datadir, 'Lib', 'site-packages', 'oci_cli', 'dynamic_loader.py')
 else:
     this_file_path = path.abspath(getsourcefile(lambda: 0))
 if "site-packages" in this_file_path or "dist-packages" in this_file_path:
@@ -24,12 +32,15 @@ if "site-packages" in this_file_path or "dist-packages" in this_file_path:
     # last occurrence of oci_cli in the path.
     python_cli_root_dir = this_file_path[0:this_file_path.rindex("oci_cli")]
 elif "lib" in this_file_path:
+    # C:\Users\hkuma\AppData\Local\Programs\Oracle\oci-cli\Lib\oci_cli
     python_cli_root_dir = this_file_path[0:this_file_path.index("oci_cli")]
 else:
-    python_cli_root_dir = this_file_path[0:this_file_path.index("\src\oci_cli")]
+    python_cli_root_dir = this_file_path[0:this_file_path.index(path.join('src', 'oci_cli'))]
     sys.path.append(python_cli_root_dir + 'src')
 sys.path.append(python_cli_root_dir)
 services_dir = path.join(python_cli_root_dir, ALL_SERVICES_DIR)
+print("python_cli_root_dir : {}".format(python_cli_root_dir))
+print("services_dir : {}".format(services_dir))
 
 
 def load_required_services_for_invocation():
